@@ -1,0 +1,72 @@
+`<!DOCTYPE html>
+  <html lang="ko">
+    <head>
+      ${fs.readFileSync('./head','utf8')}
+      <style>
+        * {
+          color:white;
+        }
+        .base-border{
+          border-width: 1px 0 0 1px;
+          border-color: white;
+        }
+      </style>
+    </head>
+    <body style="background-color:black">
+      <header alt="네비게이터">
+        <nav class="navbar fixed-top navbar-light bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="./" style="color:white;margin-left:30px" alt="메인으로">${fs.readFileSync('./headerName','utf8')}</a>
+            <a class="navbar-brand" href="./login" style="color:white;" alt="로그인" style="float:right">로그인</a>
+          </div>
+        </nav>
+      </header>
+      <div style="padding-top: 183px"></div>
+      
+      <div style="position:relative;margin:50px auto;width:1500px;height:500px">
+        <div style="border: 1px solid black;">
+        <div alt="실시간 베스트" style="float:left;width:725px;">
+          <div style="font-size:50px">실시간 베스트</div>
+        </div>
+        <div alt="실시간 채팅" style="float:right;width:725px;">
+          <div style="font-size:50px">실시간 채팅</div>
+          <div style="padding-top:40px;"></div>
+          <form action="./" method="post">
+            <input type="text" name="liveChat" maxlength="100" style="background-color:black;border-color:black black white black;border-width:0 0 1px 0;width:720px;" placeholder="채팅을 입력하세요.">
+            <input type="submit" style="position: absolute; left: -9999px">
+          </form>
+          ${printLiveChat()}
+        </div>
+        </div>
+      </div>
+
+      <div style="position:relative;margin:50px auto;width:1500px;height:1000px">
+        <div style="border: 1px solid black;text-align:center">
+          <span style="font-size:50px;">채널</span>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;">
+            <div style="border:1px solid white;height:200px;margin:20px">
+            프로그래밍
+            </div>
+            <div style="border:1px solid white;height:200px;margin:20px">
+            경제
+            </div>
+            <div style="border:1px solid white;height:200px;margin:20px">
+            정치
+            </div>
+            <div style="border:1px solid white;height:200px;margin:20px">
+            잡담
+            </div>
+            <div style="border:1px solid white;height:200px;margin:20px">
+            잡담
+            </div>
+          </div>
+          <div style="width:800px;font-size:60px;display:inline-block">
+            <a href="#"><span style="float:left">&ltLeft</span></a>
+            <a href="#"><span style="float:right">right&gt</span></a>
+          </div>
+        </div>
+      </div>
+      
+      ${fs.readFileSync('./foot',"utf8")}
+    </body>
+    </html>`

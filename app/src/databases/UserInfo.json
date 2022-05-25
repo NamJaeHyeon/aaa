@@ -1,0 +1,19 @@
+{
+  "id":[],
+  "nickname":[],
+  "isNameFixed":[],
+  "CertificateRoot":[],
+  "pwhash":[],
+  "PhoneNumber":[],
+  "Email":[],
+  "description":[],
+  "aboutOTP":[],
+  "ectInfoJSON":[],
+  "likeList":[],
+  "dislikeList":[],
+  "unlikeList":[],
+  "subscribeList":[],
+  "view":[],
+  "profileImage":[],
+  "sharedState":[]
+}

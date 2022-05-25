@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  ${fs.readFileSync('./head','utf8')}
+  <style>
+    * {
+      color:white;
+    }
+    .base-border{
+      border-width: 1px 0 0 1px;
+      border-color: white;
+    }
+  </style>
+</head>
+<body style="background-color:black">
+  <header alt="네비게이터">
+    <nav class="navbar fixed-top navbar-light bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="./" style="color:white;margin-left:30px" alt="메인으로">${fs.readFileSync('./headerName','utf8')}</a>
+        <a class="navbar-brand" href="./login" style="color:white;" alt="로그인" style="float:right">로그인</a>
+      </div>
+    </nav>
+  </header>
+  <div style="padding-top: 183px"></div>
+  
+  <div style="margin: 50 auto;display:inline-block;width:1500px;border:1px solid white;position:relative;">
+    <div>llll</div>
+  </div>
+  
+  ${fs.readFileSync('./foot',"utf8")}
+</body>
+</html>

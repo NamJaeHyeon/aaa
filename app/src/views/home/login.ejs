@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+  <html lang="ko">
+    <head>
+      <%- head -%>
+      <style>
+        * {
+          color:white;
+        }
+        .base-border{
+          border-width: 1px 0 0 1px;
+          border-color: white;
+        }
+      </style>
+    </head>
+    <body style="background-color:black">
+      <header alt="네비게이터">
+        <nav class="navbar fixed-top navbar-light bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="./" style="color:white;margin-left:30px" alt="메인으로"><span style="font-size:40px">𝕴𝖓𝖋𝖊𝖗</span><span style="font-size:28px; margin-left:10px">𝕷𝖎𝖇𝖊𝖗𝖆𝖑</span></a>
+          </div>
+        </nav>
+      </header>
+      <div style="padding-top: 83px"></div>
+      
+      <div style="position:relative;margin:50px auto;width:1060px;">
+        <div style="border:1px solid black;height:1060px;text-align:center">
+          <div style="font-size:70px;margin:200px 0">로그인</div>
+          <div style="font-size:30px;text-align:left;display:inline-block;width:500px">
+            <div style="float:left;display:inline-block">아이디</div><div style="float:right;display:inline-block"><input type="text" name="id"></div>
+            <div style="padding-top:52px;display:inline-block"></div>
+            <div style="float:left;display:inline-block">비밀번호</div><div style="float:right;display:inline-block"><input type="text" name="pw"></div>
+          </div>
+        </div>
+        <a href="./register">회원가입</a>
+      </div>
+
+      <%- foot -%>
+    </body>
+    </html>

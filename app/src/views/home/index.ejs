@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <%- head -%>
+  <script src="js/home/sha256.min.js" integrity="sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!--link rel="stylesheet" href="css/home/index.css"-->
+  <script src="js/home/index.js" defer></script>
+  <style>
+    * {
+      color:white;
+    }
+    .base-border{
+      border-width: 1px 0 0 1px;
+      border-color: white;
+    }
+  </style>
+</head>
+<body style="background-color:black">
+  <header alt="네비게이터">
+    <nav class="navbar fixed-top navbar-light bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="./" style="color:white;margin-left:30px" alt="메인으로"><%- headerName -%></a>
+        <a class="navbar-brand" href="./login" style="color:white;" alt="로그인" style="float:right">로그인</a>
+      </div>
+    </nav>
+  </header>
+  <div style="padding-top: 183px"></div>
+  
+  <div style="position:relative;margin:50px auto;width:1500px;height:500px">
+    <div style="border: 1px solid black;">
+    <div alt="실시간 베스트" style="float:left;width:725px;">
+      <div style="font-size:30px">실시간 베스트</div>
+    </div>
+    <div alt="실시간 채팅" style="float:right;width:725px;">
+      <div style="font-size:30px">실시간 채팅</div>
+      <div style="padding-top:40px;"></div>
+      <input id="Lchat" type="text" name="liveChat" maxlength="100" style="background-color:black;border-color:black black gray black;border-width:0 0 1px 0;width:720px;" placeholder="채팅을 입력하세요.">
+      <span id="getLive">
+        <%- chat -%>
+      </span>
+    </div>
+    </div>
+  </div>
+
+  <div style="position:relative;margin:50px auto;width:1500px;height:1000px">
+    <div style="border: 1px solid black;text-align:center">
+      <span style="font-size:50px;">채널</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;">
+        <%- channel -%>
+      </div>
+      <div style="width:800px;font-size:60px;display:inline-block">
+        <a href="#"><span style="float:left">&lt</span></a>
+        <a href="#"><span style="float:right">&gt</span></a>
+      </div>
+    </div>
+  </div>
+  
+  <%- foot -%>
+  <div id="values" style="display:none"><%- n -%></div>
+</body>
+</html>
