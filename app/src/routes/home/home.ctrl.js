@@ -3,6 +3,10 @@
 const res = require("express/lib/response");
 const fs = require("fs");
 
+function blindIP(ip){
+  return ((x) => (y => `${y[0]}.${y[1]}.*.*`)(x.split(".")))(ip);
+}
+
 function pageBase(){
   let head = fs.readFileSync('./src/views/home/head','utf8');
   let headerName = fs.readFileSync('./src/views/home/headerName','utf8');
@@ -32,8 +36,8 @@ function printLiveChat(){
   let b = a.count;
   for(let i=b-1; i >= (b-15>=0 ? b-15:0);i--) t+=`
             <div>
-              <span style="font-size:15px;float:left;width:70px">${a.writer[i]}</span>
-              <span style="font-size:15px;float:right;width:650px;overflow:hidden;text-overflow:ellipsis;">${fs.readFileSync("./src/databases/MainLiveChat/"+i,"utf8").replace(/\>/g,"&gt").replace(/\</g,"&lt").replace(/\"/g,"&quot").replace(/\'/g,"&#39")}</span>
+              <span style="font-size:15px;float:left;width:140px">${blindIP(a.writer[i])}</span>
+              <span style="font-size:15px;float:right;width:580px;overflow:hidden;text-overflow:ellipsis;">${fs.readFileSync("./src/databases/MainLiveChat/"+i,"utf8").replace(/\>/g,"&gt").replace(/\</g,"&lt").replace(/\"/g,"&quot").replace(/\'/g,"&#39")}</span>
             </div>`;
   return [t,b];
 }
@@ -62,7 +66,7 @@ function getLiveChat(req, res){
   const a = JSON.parse(fs.readFileSync("./src/databases/MainLiveChat/info.json","utf8"));
   if (a.count > req.body.index && Number.isInteger(req.body.index) && req.body.index > 0) {
     const b = fs.readFileSync("./src/databases/MainLiveChat/"+req.body.index,"utf8");
-    res.json({msg:"success", writer:a.writer[req.body.index], t: b});
+    res.json({msg:"success", writer:blindIP(a.writer[req.body.index]), t: b});
   } else {
     res.json({msg:"잘못된 요청입니다."});
   }
@@ -76,6 +80,9 @@ const output = {
   },
   login: (req, res) => {
     res.render('home/login', pageBase());
+  },
+  makeChannel: (req, res) => {
+    res.render('home/makeChannel', pageBase());
   }
 };
 

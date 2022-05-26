@@ -30,16 +30,17 @@ function liveChatUpdate(){
       if (res.count !== chatCount) {
         for (let i = res.count<chatCount+15 ? chatCount:res.count-15; i<res.count; i++){
           send({purpose: "getLiveChat", index: i}, (res) => {
-            if (res.success) {
+            if (res.msg === "success") {
               console.log(res);
-              let a = getElm("#getLive");
+              let a = getElm("#getLive")[0];
               a.innerHTML = `<div>
-              <span style="font-size:15px;float:left;width:70px">${res.writer}</span>
-              <span style="font-size:15px;float:right;width:650px;overflow:hidden;text-overflow:ellipsis;">${res.t}</span>
+              <span style="font-size:15px;float:left;width:140px">${res.writer}</span>
+              <span style="font-size:15px;float:right;width:580px;overflow:hidden;text-overflow:ellipsis;">${res.t}</span>
             </div>
             ` + a.innerHTML;
             }
           })
+          console.log(res);
         }
         chatCount = res.count;
         console.log("updated!", res);

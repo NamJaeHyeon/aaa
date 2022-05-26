@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  ${fs.readFileSync('./head','utf8')}
+  <%- head -%>
+  <script src="js/home/makeChannel.js" defer></script>
+  
   <style>
     * {
       color:white;
     }
-    .base-border{
-      border-width: 1px 0 0 1px;
-      border-color: white;
+    input {
+      background-color: black;
+      border-width: 0 0 1px 0;
+    }
+    textarea {
+      background-color: black;
+      border-width: 0 0 1px 0;
     }
   </style>
 </head>
@@ -16,17 +22,24 @@
   <header alt="네비게이터">
     <nav class="navbar fixed-top navbar-light bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="./" style="color:white;margin-left:30px" alt="메인으로">${fs.readFileSync('./headerName','utf8')}</a>
-        <a class="navbar-brand" href="./login" style="color:white;" alt="로그인" style="float:right">로그인</a>
+        <a class="navbar-brand" href="./" style="color:white;margin-left:30px" alt="메인으로"><%- headerName -%></a>
       </div>
     </nav>
   </header>
   <div style="padding-top: 183px"></div>
   
-  <div style="margin: 50 auto;display:inline-block;width:1500px;border:1px solid white;position:relative;">
-    <div>llll</div>
+  <div style="position:relative;margin:50px auto;width:1500px;height:1000px">
+    <div style="border: 1px solid black;text-align:center">
+      <span style="font-size:50px;">채널 신청</span>
+      <div style="border: 1px solid gray;padding:30px;height:700px;">
+        <div style="padding: 20px;">제목 <input id="title" type="text"></div>
+        <div style="padding: 20px;">설명 <textarea id="explain" type="text"></textarea></div>
+        <div style="padding: 20px;">이메일 회신 <input id="email" type="text"></div>
+        <button style="border: 1px solid gray;background-color:black;">요청</button>
+      </div>
+    </div>
   </div>
-  
-  ${fs.readFileSync('./foot',"utf8")}
+
+  <%- foot -%>
 </body>
 </html>
