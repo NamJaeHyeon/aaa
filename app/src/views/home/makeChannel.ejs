@@ -14,7 +14,7 @@
     }
     textarea {
       background-color: black;
-      border-width: 0 0 1px 0;
+      border-width: 1px;
     }
   </style>
 </head>
@@ -32,10 +32,11 @@
     <div style="border: 1px solid black;text-align:center">
       <span style="font-size:50px;">채널 신청</span>
       <div style="border: 1px solid gray;padding:30px;height:700px;">
-        <div style="padding: 20px;">제목 <input id="title" type="text"></div>
-        <div style="padding: 20px;">설명 <textarea id="explain" type="text"></textarea></div>
-        <div style="padding: 20px;">이메일 회신 <input id="email" type="text"></div>
-        <button style="border: 1px solid gray;background-color:black;">요청</button>
+        <div style="padding: 20px;font-size:20px;">제목(*필수) <input id="title" type="text"></div>
+        <div style="padding: 20px;font-size:20px;">path id(*필수) <input id="pathID" type="text"></div>
+        <div style="padding: 20px;font-size:20px;">설명(선택) <textarea id="explain" type="text"></textarea></div>
+        <div style="padding: 20px;font-size:20px;">이메일 회신(선택) <input id="email" type="text"></div>
+        <button style="border: 1px solid gray;background-color:black;font-size: 30px;">요청</button>
       </div>
     </div>
   </div>

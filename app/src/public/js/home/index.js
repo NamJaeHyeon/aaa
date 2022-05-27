@@ -38,6 +38,7 @@ function liveChatUpdate(){
               <span style="font-size:15px;float:right;width:580px;overflow:hidden;text-overflow:ellipsis;">${res.t}</span>
             </div>
             ` + a.innerHTML;
+              if(getElm("#getLive > div").length>15)getElm("#getLive")[0].removeChild(getElm("#getLive > div")[getElm("#getLive > div").length-1]);
             }
           })
           console.log(res);

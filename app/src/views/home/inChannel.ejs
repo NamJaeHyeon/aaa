@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <%- head -%>
+  <style>
+    * {
+      color:white;
+      font-size: 20px;
+    }
+    .base-border{
+      border-width: 1px 0 0 1px;
+      border-color: white;
+    }
+    .gridList > div {
+      border-bottom: 1px solid gray;
+    }
+    .borderTopBottom {
+      border: 1px solid white;
+      border-width: 1px 0 1px 0;
+      border-color: white;
+    }
+  </style>
+  <script src="/js/home/inChannel.js" defer></script>
+</head>
+<body style="background-color:black">
+  <header alt="네비게이터">
+    <nav class="navbar fixed-top navbar-light bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/" style="color:white;margin-left:30px" alt="메인으로"><%- headerName -%></a>
+        <a class="navbar-brand" href="/login" alt="로그인" style="float:right;display:none;">로그인</a>
+      </div>
+    </nav>
+  </header>
+  <div style="padding-top: 183px"></div>
+
+  <div style="position:relative;margin:50px auto;width:1500px;height:200px">
+    <div style="border: 1px solid black;text-align:center">
+      <h1><%- channelName -%></h1>
+    </div>
+  </div>
+
+  <div style="position:relative;margin:50px auto;width:1500px;height:1000px">
+    <div style="border: 1px solid black;text-align:center">
+      <button id="writeArticle" style="border: 1px solid gray;background-color:black;margin:30px;font-size: 20px;">글쓰기</button>
+      <div class="gridList" style="display:grid;grid-template-columns: 1fr 8fr 1fr 1fr;">
+        <div class="borderTopBottom">#</div><div class="borderTopBottom">제목</div><div class="borderTopBottom">글쓴이</div><div class="borderTopBottom">평가</div>
+        <%- chli -%>
+      </div>
+    </div>
+  </div>
+  
+  <%- foot -%>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <%- head -%>
+  <script src="js/home/sha256.min.js" integrity="sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!--link rel="stylesheet" href="css/home/index.css"-->
+  <script src="js/home/index.js" defer></script>
+  <style>
+    * {
+      color:white;
+    }
+    .base-border{
+      border-width: 1px 0 0 1px;
+      border-color: white;
+    }
+  </style>
+</head>
+<body style="background-color:black">
+  <header alt="네비게이터">
+    <nav class="navbar fixed-top navbar-light bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/" style="color:white;margin-left:30px" alt="메인으로"><%- headerName -%></a>
+        <a class="navbar-brand" href="/login" alt="로그인" style="float:right;display:none;">로그인</a>
+      </div>
+    </nav>
+  </header>
+  <div style="padding-top: 183px"></div>
+  
+  <div style="position:relative;margin:50px auto;width:1500px;height:1000px">
+    <div style="border: 1px solid black;text-align:center">
+    </div>
+  </div>
+  
+  <%- foot -%>
+</body>
+</html>

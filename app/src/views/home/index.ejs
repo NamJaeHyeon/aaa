@@ -3,7 +3,6 @@
 <head>
   <%- head -%>
   <script src="js/home/sha256.min.js" integrity="sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!--link rel="stylesheet" href="css/home/index.css"-->
   <script src="js/home/index.js" defer></script>
   <style>
     * {
@@ -20,7 +19,7 @@
     <nav class="navbar fixed-top navbar-light bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="./" style="color:white;margin-left:30px" alt="메인으로"><%- headerName -%></a>
-        <a class="navbar-brand" href="./login" style="color:white;" alt="로그인" style="float:right">로그인</a>
+        <a class="navbar-brand" href="./login" alt="로그인" style="float:right;display:none;">로그인</a>
       </div>
     </nav>
   </header>
@@ -49,8 +48,6 @@
         <%- channel -%>
       </div>
       <div style="width:800px;font-size:60px;display:inline-block">
-        <a href="#"><span style="float:left">&lt</span></a>
-        <a href="#"><span style="float:right">&gt</span></a>
       </div>
     </div>
   </div>

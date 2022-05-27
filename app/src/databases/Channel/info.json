@@ -1,4 +1,5 @@
 {
   "channelCount": 1,
-  "channelName": ["잡담"]
+  "channelName": ["잡담"],
+  "pathID": ["board"]
 }
