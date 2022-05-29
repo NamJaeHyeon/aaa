@@ -1,17 +1,11 @@
 "use strict";
 
-if (location.pathname !== "/write" || /[^a-zA-Z0-9]/.test(location.search.slice(6))){
-  alert("오류가 생겼습니다.");
-}
-
 const getElm = function (query){
   return document.querySelectorAll(query);
 };
 
-getElm("#path")[0].innerText = "> "+location.search.slice(6);
-
-function send(obj,resFn){
-  fetch("/write",{
+function send(path, obj, resFn){
+  fetch(path,{
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -32,17 +26,17 @@ getElm("button")[0].addEventListener("click", function(event){
   if(obj.title.length<1 || obj.detail.length<1){
     alert("제목과 내용을 적어도 1자 이상 작성해주세요.");
     return;
-  } else if (getElm("#pw")[0].value.length<1) {
-    alert("적어도 1자 이상의 비밀번호를 입력해주세요.");
+  } else if (getElm("#pw")[0].value.length<4) {
+    alert("적어도 4자 이상의 비밀번호를 입력해주세요.");
     return;
   } else {
-    send(obj, (res) => {
+    send(location.pathname, obj, (res) => {
       if(res.msg === "success"){
-        location.href = "/channel/"+location.search.slice(6);
+        location.href = "/c/"+location.search.slice(6);
       } else {
         alert(res.msg);
         alert("잘못된 형식입니다.");
-        location.href = "/channel/"+location.search.slice(6);
+        location.href = "/c/"+location.search.slice(6);
       }
     });
   }

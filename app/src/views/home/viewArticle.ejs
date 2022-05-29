@@ -2,9 +2,7 @@
 <html lang="ko">
 <head>
   <%- head -%>
-  <script src="js/home/sha256.min.js" integrity="sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!--link rel="stylesheet" href="css/home/index.css"-->
-  <script src="js/home/index.js" defer></script>
+  <script src="/js/home/viewArticle.js" defer></script>
   <style>
     * {
       color:white;
@@ -28,9 +26,12 @@
   
   <div style="position:relative;margin:50px auto;width:1500px;height:1000px">
     <div style="border: 1px solid black;">
-      <div><h1><%- info.title -%></h1></div>
-      <div style="border:1px solid gray;margin:50px 0;"></div>
+      <div><h1><%- title -%></h1></div>
+      <div style="border-bottom:1px solid gray;margin:50px 0;"></div>
       <div><%- detail -%></div>
+      <div style="height:100px;"></div>
+      <button id="edit" style="border: 1px solid gray;background-color:black;font-size: 20px;">수정</button>
+      <button id="delete" style="border: 1px solid gray;background-color:black;font-size: 20px;">삭제</button>
     </div>
   </div>
   

@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <%- head -%>
+  <link rel="stylesheet" href="css/home/index.css">
   <script src="js/home/sha256.min.js" integrity="sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="js/home/index.js" defer></script>
   <style>
@@ -25,23 +26,22 @@
   </header>
   <div style="padding-top: 183px"></div>
   
-  <div style="position:relative;margin:50px auto;width:1500px;height:500px">
-    <div style="border: 1px solid black;">
-    <div alt="실시간 베스트" style="float:left;width:725px;">
-      <div style="font-size:30px">실시간 베스트</div>
-    </div>
-    <div alt="실시간 채팅" style="float:right;width:725px;">
-      <div style="font-size:30px">실시간 채팅</div>
-      <div style="padding-top:40px;"></div>
-      <input id="Lchat" type="text" name="liveChat" maxlength="100" style="background-color:black;border-color:black black gray black;border-width:0 0 1px 0;width:720px;" placeholder="채팅을 입력하세요.">
-      <span id="getLive">
-        <%- chat -%>
-      </span>
-    </div>
-    </div>
-  </div>
+  <div style="position:relative;margin:50px auto;width:1200px;height:2000px">
+    <div style="height:500px;">
+      <div alt="실시간 베스트" style="float:left;width:550px;margin:25px;">
+        <div style="font-size:30px">실시간 베스트</div>
+      </div>
 
-  <div style="position:relative;margin:50px auto;width:1500px;height:1000px">
+      <div alt="실시간 채팅" style="float:right;width:550px;margin:25px;">
+        <div style="font-size:30px">실시간 채팅</div>
+        <div style="padding-top:40px;"></div>
+        <input id="Lchat" type="text" name="liveChat" maxlength="100" style="background-color:black;border-color:black black gray black;border-width:0 0 1px 0;width:550px;" placeholder="채팅을 입력하세요.">
+        <span id="getLive">
+          <%- chat -%>
+        </span>
+      </div>
+    </div>
+
     <div style="border: 1px solid black;text-align:center">
       <span style="font-size:50px;">채널</span>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;">

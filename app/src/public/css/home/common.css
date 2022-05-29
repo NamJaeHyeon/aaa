@@ -1,0 +1,13 @@
+body {
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
+}
+.draggable {
+  -webkit-user-select:text;
+  -moz-user-select:text;
+  -ms-user-select:text;
+  user-select:text
+}
+/* 출처: https://fresh-mint.tistory.com/entry/css-드래그-방지 [민트코딩:티스토리] */

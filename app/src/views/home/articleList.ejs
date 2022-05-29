@@ -13,14 +13,26 @@
     }
     .gridList > div {
       border-bottom: 1px solid gray;
+      padding: 1px;
     }
-    .borderTopBottom {
-      border: 1px solid white;
-      border-width: 1px 0 1px 0;
-      border-color: white;
+    .gridList > div > div {
+      border-bottom: 0;
+      padding: 0;
+    }
+    a:link{
+      text-decoration: none;
+      color: white;
+    }
+    a:visited{
+      text-decoration: none;
+      color: rgb(123, 0, 255);
+    }
+    a:hover{
+      text-decoration: underline;
+  text-decoration-color: white;
     }
   </style>
-  <script src="/js/home/inChannel.js" defer></script>
+  <script src="/js/home/articleList.js" defer></script>
 </head>
 <body style="background-color:black">
   <header alt="네비게이터">
@@ -33,17 +45,17 @@
   </header>
   <div style="padding-top: 183px"></div>
 
-  <div style="position:relative;margin:50px auto;width:1500px;height:200px">
+  <div style="position:relative;margin:50px auto;width:1200px;height:200px">
     <div style="border: 1px solid black;text-align:center">
       <h1><%- channelName -%></h1>
     </div>
   </div>
 
-  <div style="position:relative;margin:50px auto;width:1500px;height:1000px">
+  <div style="position:relative;margin:50px auto;width:1200px;height:1000px">
     <div style="border: 1px solid black;text-align:center">
       <button id="writeArticle" style="border: 1px solid gray;background-color:black;margin:30px;font-size: 20px;">글쓰기</button>
       <div class="gridList" style="display:grid;grid-template-columns: 1fr 8fr 1fr 1fr;">
-        <div class="borderTopBottom">#</div><div class="borderTopBottom">제목</div><div class="borderTopBottom">글쓴이</div><div class="borderTopBottom">평가</div>
+        <div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">#</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">제목</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">글쓴이</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">평가</div>
         <%- chli -%>
       </div>
     </div>

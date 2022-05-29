@@ -1,0 +1,21 @@
+{
+	"count": 0,
+  "nickname": [],
+  "userID": [],
+  "passwordHash": [],
+  "articles": [],
+  "activities": [],
+  "OTP": [],
+  "likeList": [],
+  "disLikeList": [],
+  "starList": [],
+  "like": [],
+  "dislike": [],
+  "star": [],
+  "certification": [],
+  "profileImage": [],
+  "usedEmailList": [],
+  "usedPhoneNumberList": [],
+  "view": [],
+  "description": []
+}
