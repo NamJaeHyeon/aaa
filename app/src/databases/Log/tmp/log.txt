@@ -1,0 +1,11 @@
+
+1653904902674 | ::1 | {"pathID":"board","index":"7"} | {"get":true} | {}
+1653904908863 | ::1 | {"pathID":"board"} | {"get":true} | {}
+1653904909973 | ::1 | {} | {"get":true} | {}
+1653904914510 | ::1 | {} | {"post":true} | {"path":"?path=board","title":"ㅁㄴㅇㄹ","detail":"ㅁㄴㅇㄹ","hash":"fba3f67f7f0dff1f5d3ec7868b44631931f0a56b3f96a4972f1d472f50058c65"}
+1653904914576 | ::1 | {"pathID":"board"} | {"get":true} | {}
+1653904916490 | ::1 | {"pathID":"board","index":"0"} | {"get":true} | {}
+1653904918216 | ::1 | {"pathID":"board","index":"0"} | {"post":true} | {"reqType":"like"}
+1653904919657 | ::1 | {"pathID":"board","index":"0"} | {"post":true} | {"reqType":"dislike"}
+1653904921757 | ::1 | {"pathID":"board","index":"0"} | {"get":true} | {}
+1653904923744 | ::1 | {"pathID":"board"} | {"get":true} | {}

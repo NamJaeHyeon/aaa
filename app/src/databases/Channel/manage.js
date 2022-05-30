@@ -34,14 +34,23 @@ class Channel {
     return info.channelName[info.pathID.indexOf(pathID)];
   }
 
-  getArticle(pathID,index){
+  getArticle(pathID,index,doParse,view,ip){
     if (this.canGet(pathID,index)){
       const info = JSON.parse(fs.readFileSync(`./src/databases/Channel/${pathID}/${index}.json`,"utf8"));
       if (info.blinded){
-        return;
+        return "blinded";
       } else {
-        info.article = Storage.getFile(info.article);
-        info.attachments = info.attachments.map(x=>Storage.getFile(x));
+        if(view===true){
+          if(!info.view.includes(ip)){
+            info.view.push(ip);
+            info.viewCount+=1;
+            fs.writeFileSync(`./src/databases/Channel/${pathID}/${index}.json`,JSON.stringify(info));
+          }
+        }
+        if(doParse!==false){
+          info.article = Storage.getFile(info.article);
+          info.attachments = info.attachments.map(x=>Storage.getFile(x));
+        }
         return info;
       }
     } else {
@@ -65,7 +74,7 @@ class Channel {
         "dislikeCount": 0,
         "dislike": [],
         "passwordHash": sha256(password),
-        "date": "",
+        "date": (new Date()).getTime(),
         "commentCount": 0,
         "commentLink": [],
         "attachments": a,
@@ -106,11 +115,82 @@ class Channel {
     for(let i = startIndex; i >= endIndex; i--){
       if (this.canGet(pathID,i)) {
         let b = JSON.parse(fs.readFileSync(`./src/databases/Channel/${pathID}/${i}.json`,"utf8"));
-        t += `<div>${i}</div><div><a href="/channel/${pathID}/${i}"><div style="width:100%;height:100%;text-align:left">${b.title}</div></a></div><div>${b.writer}</div><div>${b.value}</div>
+        t += `<div>${i}</div><div><a href="/channel/${pathID}/${i}"><div style="width:100%;height:100%;text-align:left">${b.title}</div></a></div><div>${b.writer}</div><div>${b.viewCount}</div><div>${b.likeCount-b.dislikeCount}</div>
         `;
       }
     }
     return {chli:t, channelName:a.ChannelName};
+  }
+
+  setArticle(pathID,index,title,article,blinded){
+    const a = this.getArticle(pathID,index,false);
+    if(title!==false)a.title = title;
+    if(article!==false)a.article = Storage.addFile(article);
+    a.blinded = blinded;
+    fs.writeFileSync(`./src/databases/Channel/${pathID}/${index}.json`,JSON.stringify(a));
+    return true;
+  }
+
+  deleteArticle(pathID,index,hash){
+    if (this.canGet(pathID,index)) {
+      const a = this.getArticle(pathID,index,false);
+      if (sha256(hash) === a.passwordHash) {
+        this.setArticle(pathID,index,false,false,true);
+        return "success";
+      } else {
+        return "wrongPW";
+      }
+    } else {
+      return "error";
+    }
+  }
+
+  articleUpdate(pathID,index,reqType,ip){
+    if(reqType==="like"){
+      const a = this.getArticle(pathID,index,false);
+      const b = a.like.includes(ip);
+      const c = a.dislike.includes(ip);
+      if (c){
+        a.dislike = a.dislike.filter(function(item) {
+          return item !== ip;
+        });
+      }
+      if (b){
+        return "already like"
+      } else {
+        a.like.push(ip);
+      }
+      if(a.dislike.includes(ip)){
+        a.dislike = a.filter(x => x === ip);
+      }
+      a.likeCount = a.like.length;
+      a.dislikeCount = a.dislike.length;
+      fs.writeFileSync(`./src/databases/Channel/${pathID}/${index}.json`,JSON.stringify(a));
+      return "like success";
+    } else if(reqType==="dislike"){
+      const a = this.getArticle(pathID,index,false);
+      const b = a.like.includes(ip);
+      const c = a.dislike.includes(ip);
+      if (b){
+        a.like = a.like.filter(function(item) {
+          return item !== ip;
+        });
+      }
+      if (c){
+        return "already dislike"
+      } else {
+        a.dislike.push(ip);
+      }
+      if(a.like.includes(ip)){
+        a.like = a.like.filter(x => x === ip);
+      }
+      a.likeCount = a.like.length;
+      a.dislikeCount = a.dislike.length;
+      fs.writeFileSync(`./src/databases/Channel/${pathID}/${index}.json`,JSON.stringify(a));
+      return "dislike success";
+    } else {
+      return false;
+    }
   }
 
 }

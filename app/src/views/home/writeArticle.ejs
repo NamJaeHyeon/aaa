@@ -25,15 +25,15 @@
 <body style="background-color:black">
   <header alt="네비게이터">
     <nav class="navbar fixed-top navbar-light bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/" style="color:white;margin-left:30px" alt="메인으로"><%- headerName -%></a>
+      <div class="container-fluid" style="width:1200px">
+        <a class="navbar-brand" href="/" style="color:white;float:left" alt="메인으로"><%- headerName -%></a>
         <a class="navbar-brand" href="/login" alt="로그인" style="float:right;display:none;">로그인</a>
       </div>
     </nav>
   </header>
   <div style="padding-top: 183px"></div>
   
-  <div style="position:relative;margin:0 auto 50px auto;width:1500px;height:1000px">
+  <div style="position:relative;margin:0 auto 50px auto;width:1200px;height:1000px">
     <div style="border: 1px solid black;text-align:center">
       <div style="width:100%"><h1>글쓰기 <span id="path"></span></h1></div>
       <div style="height:50px"></div>
@@ -42,6 +42,7 @@
       <textarea cols="100" rows="100" id="detail" style="width:100%;height:300px;font-size: 30px;" placeholder="내용"></textarea>
       <input minlength="4" type="password" name="pw" id="pw" style="width:250px; font-size: 20px;" placeholder="수정 및 삭제 비밀번호">
       <button style="border: 1px solid gray;background-color:black;font-size: 20px;">글쓰기</button>
+      <button style="border: 1px solid gray;background-color:black;font-size: 20px;">취소</button>
     </div>
   </div>
   

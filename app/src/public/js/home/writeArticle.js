@@ -42,8 +42,13 @@ getElm("button")[0].addEventListener("click", function(event){
       } else {
         alert(res.msg);
         alert("잘못된 형식입니다.");
-        location.href = "/channel/"+location.search.slice(6);
       }
     });
   }
+});
+
+getElm("button")[1].addEventListener("click", function(event){
+  
+  location.href = "/channel/"+location.search.slice(6);
+  
 });

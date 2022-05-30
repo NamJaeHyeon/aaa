@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <%- head -%>
+  <script src="/js/home/sha256.min.js" integrity="sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/js/home/viewArticle.js" defer></script>
   <style>
     * {
@@ -16,22 +17,33 @@
 <body style="background-color:black">
   <header alt="네비게이터">
     <nav class="navbar fixed-top navbar-light bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/" style="color:white;margin-left:30px" alt="메인으로"><%- headerName -%></a>
+      <div class="container-fluid" style="width:1200px">
+        <a class="navbar-brand" href="/" style="color:white;float:left" alt="메인으로"><%- headerName -%></a>
         <a class="navbar-brand" href="/login" alt="로그인" style="float:right;display:none;">로그인</a>
       </div>
     </nav>
   </header>
-  <div style="padding-top: 183px"></div>
+  <div style="padding-top: 86px"></div>
   
-  <div style="position:relative;margin:50px auto;width:1500px;height:1000px">
-    <div style="border: 1px solid black;">
-      <div><h1><%- title -%></h1></div>
-      <div style="border-bottom:1px solid gray;margin:50px 0;"></div>
-      <div><%- detail -%></div>
+  <div style="position:relative;margin:50px auto;width:1200px;height:1000px">
+    <div class="draggable" style="border: 1px solid black;">
+      <div style="margin:20px 0;" id="nowPath"></div>
+      <div><h1><%- info.title -%></h1></div>
+      <div style="display:inline-block;color:gray;"><%- ((x,y)=>x.getFullYear()+"년 "+y(x.getMonth()+1)+"월 "+y(x.getDate())+"일 "+y(x.getHours())+"시 "+y(x.getMinutes())+"분 "+y(x.getSeconds())+"초")(new Date(info.date),(a) => ("00"+a).slice(-2)) -%> <%- info.writer -%></div>
+      <div style="display:inline-block;color:gray;float:right;">조회수 <%- info.viewCount -%>회</div>
+      <div style="border-bottom:1px solid gray;margin:10px 0 50px 0;"></div>
+      <div><%- info.article -%></div>
       <div style="height:100px;"></div>
       <button id="edit" style="border: 1px solid gray;background-color:black;font-size: 20px;">수정</button>
       <button id="delete" style="border: 1px solid gray;background-color:black;font-size: 20px;">삭제</button>
+      <div style="text-align:center;margin:50px 50px 0 50px;">
+        <div id="like-button" style="cursor:pointer;display:inline-block;font-size:30px;width:100px;height:100px;border-radius:50px;background-color:gray;padding:28px 0;margin-right:30px;">좋아요</div>
+        <div id="dislike-button" style="cursor:pointer;display:inline-block;font-size:30px;width:100px;height:100px;border-radius:50px;background-color:gray;padding:28px 0;">싫어요</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="display:inline-block;font-size:30px;width:100px;height:100px;padding:28px 0;margin-right:30px;"><%- info.likeCount -%></div>
+        <div style="display:inline-block;font-size:30px;width:100px;height:100px;padding:28px 0;"><%- info.dislikeCount -%></div>
+      </div>
     </div>
   </div>
   

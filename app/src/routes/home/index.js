@@ -3,7 +3,7 @@
 const express = require("express");
 const router = express.Router();
 
-const ctrl = require("./home.ctrl")
+const ctrl = require("./home.ctrl");
 
 router.get("/",ctrl.log,ctrl.output.main);
 router.get("/main",ctrl.log,(req,res)=>{res.redirect("/")})
@@ -16,7 +16,7 @@ router.get("/channel/:pathID/:index/edit",ctrl.log,ctrl.output.editArticle);
 router.post("/",ctrl.log,ctrl.process.main);
 router.post("/makeChannel",ctrl.log,ctrl.process.requestToMakeChannel);
 router.post("/write",ctrl.log,ctrl.process.writeArticle);
-router.post("/channel/:pathID/:index",ctrl.log,ctrl.process.delete);
+router.post("/channel/:pathID/:index",ctrl.log,ctrl.process.articleUpdate);
 router.post("/channel/:pathID/:index/edit",ctrl.log,ctrl.process.articleManage);
 
 module.exports = router;

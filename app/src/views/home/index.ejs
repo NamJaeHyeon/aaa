@@ -3,7 +3,6 @@
 <head>
   <%- head -%>
   <link rel="stylesheet" href="css/home/index.css">
-  <script src="js/home/sha256.min.js" integrity="sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="js/home/index.js" defer></script>
   <style>
     * {
@@ -18,23 +17,24 @@
 <body style="background-color:black">
   <header alt="네비게이터">
     <nav class="navbar fixed-top navbar-light bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="./" style="color:white;margin-left:30px" alt="메인으로"><%- headerName -%></a>
-        <a class="navbar-brand" href="./login" alt="로그인" style="float:right;display:none;">로그인</a>
+      <div class="container-fluid" style="width:1200px">
+        <a class="navbar-brand" href="/" style="color:white;float:left" alt="메인으로"><%- headerName -%></a>
+        <a class="navbar-brand" href="/login" alt="로그인" style="float:right;display:none;">로그인</a>
       </div>
     </nav>
   </header>
   <div style="padding-top: 183px"></div>
   
   <div style="position:relative;margin:50px auto;width:1200px;height:2000px">
-    <div style="height:500px;">
+    <div class="draggable" style="height:500px;">
       <div alt="실시간 베스트" style="float:left;width:550px;margin:25px;">
         <div style="font-size:30px">실시간 베스트</div>
       </div>
 
       <div alt="실시간 채팅" style="float:right;width:550px;margin:25px;">
-        <div style="font-size:30px">실시간 채팅</div>
-        <div style="padding-top:40px;"></div>
+        <div style="font-size:30px;float:left">실시간 채팅</div>
+        <div style="font-size:15px;float:right;background-color:red;border-radius:5px;padding:5px;">접속중 <span id="connecting">0</span></div>
+        <div style="padding-top:60px;"></div>
         <input id="Lchat" type="text" name="liveChat" maxlength="100" style="background-color:black;border-color:black black gray black;border-width:0 0 1px 0;width:550px;" placeholder="채팅을 입력하세요.">
         <span id="getLive">
           <%- chat -%>

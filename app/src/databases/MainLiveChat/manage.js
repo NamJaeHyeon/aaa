@@ -13,9 +13,9 @@ class LiveChat {
       a.content.push(Storage.addFile(req.body.liveChat));
       a.count += 1;
       fs.writeFileSync("./src/databases/MainLiveChat/info.json",JSON.stringify(a));
-      res.json({msg:"success"});
+      return {msg:"success"};
     } else {
-      res.json({msg:"잘못된 요청입니다."});
+      return {msg:"잘못된 요청입니다."};
     }
   }
 
@@ -33,13 +33,13 @@ class LiveChat {
 
   liveChatInfo(req, res){
     const a = JSON.parse(fs.readFileSync("./src/databases/MainLiveChat/info.json","utf8"));
-    res.json({msg:"success",count:a.count})
+    return {msg:"success",count:a.count};
   }
 
   getLiveChat(req, res){
     const a = JSON.parse(fs.readFileSync("./src/databases/MainLiveChat/info.json","utf8"));
     const b = Storage.getFile(a.content[req.body.index]);
-    res.json({msg:"success",writer:a.writer[req.body.index],t:b});//writer,content
+    return {msg:"success",writer:a.writer[req.body.index],t:b};//writer,content
   }
 
 }

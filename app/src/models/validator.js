@@ -54,7 +54,7 @@ class Validator {
   }
 
   blockXSS(str){
-    return str.replace(/\>/g,"&gt").replace(/\</g,"&lt").replace(/\"/g,"&quot").replace(/\'/g,"&#39");
+    return str.replace(/&/g,"&amp").replace(/>/g,"&gt").replace(/</g,"&lt").replace(/\"/g,"&quot").replace(/\'/g,"&#39");
   }
 
 }
