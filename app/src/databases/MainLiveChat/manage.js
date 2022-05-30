@@ -39,7 +39,7 @@ class LiveChat {
   getLiveChat(req, res){
     const a = JSON.parse(fs.readFileSync("./src/databases/MainLiveChat/info.json","utf8"));
     const b = Storage.getFile(a.content[req.body.index]);
-    return {msg:"success",writer:a.writer[req.body.index],t:b};//writer,content
+    return {msg:"success",writer:Validator.hideIP(a.writer[req.body.index]),t:b};//writer,content
   }
 
 }
