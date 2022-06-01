@@ -25,15 +25,16 @@
   </header>
   <div style="padding-top: 86px"></div>
   
-  <div style="position:relative;margin:50px auto;width:1200px;height:1000px">
+  <div style="position:relative;margin:50px auto;width:1200px;height:auto">
     <div class="draggable" style="border: 1px solid black;">
-      <div style="margin:20px 0;" id="nowPath"></div>
-      <div><h1><%- info.title -%></h1></div>
-      <div style="display:inline-block;color:gray;"><%- ((x,y)=>x.getFullYear()+"년 "+y(x.getMonth()+1)+"월 "+y(x.getDate())+"일 "+y(x.getHours())+"시 "+y(x.getMinutes())+"분 "+y(x.getSeconds())+"초")(new Date(info.date),(a) => ("00"+a).slice(-2)) -%> <%- info.writer -%></div>
-      <div style="display:inline-block;color:gray;float:right;">조회수 <%- info.viewCount -%>회</div>
+      <div style="margin:0 0 50px 0;" id="nowPath"></div><span id="channel_name" style="display:none;"><%- info.channelName -%></span>
+      <div style="margin:30px 0;"><h1><%- info.title -%></h1></div>
+      <div style="display:inline-block;color:gray;"><%- ((x,y)=>x.getFullYear()+"년 "+y(x.getMonth()+1)+"월 "+y(x.getDate())+"일 "+y(x.getHours())+"시 "+y(x.getMinutes())+"분 "+y(x.getSeconds())+"초")(new Date(info.date),(a) => ("00"+a).slice(-2)) -%> (<%- info.writer -%>)</div>
+      <div style="color:gray;float:right;">조회수 <%- info.viewCount -%>회</div>
       <div style="border-bottom:1px solid gray;margin:10px 0 50px 0;"></div>
-      <div><%- info.article -%></div>
+      <div style="word-wrap:break-word"><%- info.article -%></div>
       <div style="height:100px;"></div>
+      <button id="share" style="background-color:gray;font-size: 20px;">URL복사</button>
       <button id="edit" style="border: 1px solid gray;background-color:black;font-size: 20px;">수정</button>
       <button id="delete" style="border: 1px solid gray;background-color:black;font-size: 20px;">삭제</button>
       <div style="text-align:center;margin:50px 50px 0 50px;">
@@ -43,6 +44,35 @@
       <div style="text-align:center;">
         <div style="display:inline-block;font-size:30px;width:100px;height:100px;padding:28px 0;margin-right:30px;"><%- info.likeCount -%></div>
         <div style="display:inline-block;font-size:30px;width:100px;height:100px;padding:28px 0;"><%- info.dislikeCount -%></div>
+      </div>
+      <div style="font-size:40px;">댓글 (1) example</div>
+      <div style="border:1px solid gray;border-radius:25px;padding:25px;font-size:20px;">
+        <div style="display:inline-block">(182.208) sdafasdf</div>
+        <div style="float:right;">2022.06.01 11:46:18</div>
+        <div><input type="button" value="좋아요"><input type="button" value="싫어요"><input type="button" value="공유"><input type="button" value="수정"><input type="button" value="삭제"></div>
+        <br>
+        <div>댓글(1)</div>
+        <br>
+        <div style="border:1px solid gray;border-radius:25px;padding:25px;font-size:20px;">
+          <div style="display:inline-block">(182.208) sdafasdf</div>
+          <div style="float:right;">2022.06.01 11:46:18</div>
+          <div>좋아요 | 싫어요 | 공유 | 수정 | 삭제 | 댓글</div>
+          <br>
+          <div>댓글(0)</div>
+          <br>
+          <div style="border:1px solid gray;border-radius:25px;padding:25px;font-size:20px;">
+            <div style="display:inline-block">(182.208) <input type="text" name="comment" id="comment" style="width:auto;background-color:black;border-width:0 0 1px 0;" placeholder="글쓰기"></div>
+            </div>
+          </div>
+        <br>
+        <div style="border:1px solid gray;border-radius:25px;padding:25px;font-size:20px;">
+          <div style="display:inline-block">(182.208) <input type="text" name="comment" id="comment" style="width:auto;background-color:black;border-width:0 0 1px 0;" placeholder="글쓰기"></div>
+          </div>
+        </div>
+      <br>
+      <div style="border:1px solid gray;border-radius:25px;padding:25px;font-size:20px;">
+        <div style="display:inline-block">(182.208) <input type="text" name="comment" id="comment" style="width:auto;background-color:black;border-width:0 0 1px 0;" placeholder="글쓰기"></div>
+        </div>
       </div>
     </div>
   </div>

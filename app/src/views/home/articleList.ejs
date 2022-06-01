@@ -5,11 +5,13 @@
   <style>
     * {
       color:white;
-      font-size: 20px;
     }
     .base-border{
       border-width: 1px 0 0 1px;
       border-color: white;
+    }
+    .gridList {
+      font-size: 20px;
     }
     .gridList > div {
       border-bottom: 1px solid gray;
@@ -43,20 +45,21 @@
       </div>
     </nav>
   </header>
-  <div style="padding-top: 183px"></div>
+  <div style="padding-top: 86px"></div>
 
-  <div style="position:relative;margin:50px auto;width:1200px;height:200px">
+  <div style="position:relative;margin:50px auto;width:1200px;">
     <div style="border: 1px solid black;text-align:center">
       <h1><%- channelName -%></h1>
     </div>
   </div>
 
-  <div style="position:relative;margin:50px auto;width:1200px;height:1000px">
+  <div style="position:relative;margin:0 auto 250px auto;width:1200px;height:auto">
     <div style="border: 1px solid black;text-align:center">
       <button id="writeArticle" style="border: 1px solid gray;background-color:black;margin:30px;font-size: 20px;">글쓰기</button>
       <div class="gridList" style="display:grid;grid-template-columns: 1fr 8fr 1fr 1fr 1fr;">
         <div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">#</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">제목</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">글쓴이</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">조회수</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">평가</div>
         <%- chli -%>
+
       </div>
     </div>
   </div>

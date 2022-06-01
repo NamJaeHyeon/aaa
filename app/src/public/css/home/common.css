@@ -1,8 +1,8 @@
 body {
-  -webkit-user-select:none;
+  /* -webkit-user-select:none;
   -moz-user-select:none;
   -ms-user-select:none;
-  user-select:none;
+  user-select:none; */
 }
 .draggable {
   -webkit-user-select:text;
@@ -11,3 +11,32 @@ body {
   user-select:text
 }
 /* 출처: https://fresh-mint.tistory.com/entry/css-드래그-방지 [민트코딩:티스토리] */
+
+a:link {
+  text-decoration: none;
+  color: white;
+}
+
+a:visited {
+  color:blueviolet;
+}
+
+a:hover:not(.navbar-brand) {
+  text-decoration: underline;
+  text-decoration-color: white;
+}
+
+#absolute-white-color {
+  color: white;
+}
+#absolute-white-color:visited {
+  color: white;
+}
+#absolute-white-color:hover {
+  color: white;
+  text-decoration: underline;
+  text-decoration-color: white;
+}
+#absolute-white-color:active {
+  color: white;
+}

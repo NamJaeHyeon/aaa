@@ -17,6 +17,6 @@ router.post("/",ctrl.log,ctrl.process.main);
 router.post("/makeChannel",ctrl.log,ctrl.process.requestToMakeChannel);
 router.post("/write",ctrl.log,ctrl.process.writeArticle);
 router.post("/channel/:pathID/:index",ctrl.log,ctrl.process.articleUpdate);
-router.post("/channel/:pathID/:index/edit",ctrl.log,ctrl.process.articleManage);
+router.post("/channel/:pathID/:index/edit",ctrl.log,ctrl.process.articleEdit);
 
 module.exports = router;

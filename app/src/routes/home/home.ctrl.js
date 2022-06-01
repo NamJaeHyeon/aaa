@@ -42,20 +42,28 @@ const output = {
     res.render('home/makeChannel', pageBase());
   },
   watchArticleList: (req, res) => {
-    const a = Channel.makeArticleHtmlList(req.params.pathID,0);
-    res.render('home/articleList', Object.assign({},pageBase(),a));
+    const a = Channel.getHTMLArticlesList(req.params.pathID,0);
+    if (a === "doesn't exist the pathID"){
+      res.render('home/error', Object.assign(pageBase(),{info:"존재하지 않는 경로입니다."}));
+    } else {
+      res.render('home/articleList', Object.assign(pageBase(),a));
+    }
   },
   writeForm: (req, res) => {
     res.render('home/writeArticle', pageBase());
   },
   watchArticle: (req, res) => {
-    const a = Channel.getArticle(req.params.pathID,req.params.index,true,true,req.headers["x-forwarded-for"]||req.ip);
-    if (a === "blinded") {
-      res.send("삭제된 게시글입니다.");
-    } else if (a !== undefined){
-      res.render('home/viewArticle', Object.assign({},pageBase(),{info:a}));
+    const a = Channel.viewArticle(req.params.pathID,Number(req.params.index),req.headers["x-forwarded-for"]||req.ip);
+    if (a.blinded) {
+      res.render('home/error', Object.assign(pageBase(),{info:"삭제된 게시글입니다."}));
+    } else if (a === "doesn't exist the article"){
+      res.render('home/error', Object.assign(pageBase(),{info:"글이 존재하지 않습니다."}));
+    } else if (a === "doesn't exist the pathID") {
+      res.render('home/error', Object.assign(pageBase(),{info:"잘못된 경로입니다."}));
+    } else if (a.index == req.params.index){
+      res.render('home/viewArticle', Object.assign(pageBase(),{info:a}));
     } else {
-      res.send("Error");
+      res.render('home/viewArticle', Object.assign(pageBase(),{info:"예기치 못한 에러"}));
     }
   },
   editArticle: (req, res) => {
@@ -65,8 +73,8 @@ const output = {
 
 const process = {
   main: (req, res) => {
-    let myid = connecting.findIndex(x => x.ip === req.headers["x-forwarded-for"]||req.ip);
     connecting = connecting.filter(x => {return x.date > (new Date()).getTime()-10000});
+    let myid = connecting.findIndex(x => x.ip === req.headers["x-forwarded-for"]||req.ip);
     if(myid === -1){
       connecting.push({ip:req.headers["x-forwarded-for"]||req.ip, date:(new Date()).getTime()});
     } else {
@@ -114,24 +122,43 @@ const process = {
     }
   },
   writeArticle: (req, res) => {
-    const a = Channel.writeArticle(req.body.path.slice(6),req.body.title,req.headers["x-forwarded-for"]||req.ip,req.body.detail,undefined,req.body.hash,[]);
-    if(a){
-      res.json(a);
+    const a = Channel.writeArticle(req.body.path.slice(6),req.body.title,req.body.detail,req.headers["x-forwarded-for"]||req.ip,req.body.hash);
+    if(a === "doesn't exist the pathID"){
+      res.json({msg: "해당 경로가 존재하지 않습니다."});
+    } else if (a === "success") {
+      res.json({msg: a});
     } else {
       res.json({msg: "error"});
     }
   },
-  articleManage: (req, res) => {
-    res.send();
-  },
-  articleUpdate: (req, res) => {
-    const b = Channel.articleUpdate(req.params.pathID,req.params.index,req.body.reqType,req.headers["x-forwarded-for"]||req.ip);
-    if (b===false){
-      const a = Channel.deleteArticle(req.params.pathID,req.params.index,req.body.hash);
+  articleEdit: (req, res) => {
+    if (req.body.type==="init"){
+      const a = Channel.viewArticle(req.params.pathID,Number(req.params.index),req.headers["x-forwarded-for"]||req.ip,false);
+      if (a === "doesn't exist the pathID") {
+        res.json({msg:"존재하지 않는 경로입니다."});
+      } else if (a === "doesn't exist the article"){
+        res.json({msg:"존재하지 않는 글입니다."});
+      } else if (a.index == req.params.index){
+        res.json({msg:"success",title:a.title,article:a.article});
+      } else {
+        res.json({msg:"Error"});
+      }
+    } else if (req.body.type==="submit"){
+      const a = Channel.editArticle(req.params.pathID,Number(req.params.index),req.body.title,req.body.article,req.body.hash);
       res.json({msg:a});
     } else {
-      console.log(b);
+      res.json({msg:"Error"})
+    }
+  },
+  articleUpdate: (req, res) => {
+    if(req.body.reqType === "delete"){
+      const a = Channel.deleteArticle(req.params.pathID,Number(req.params.index),req.body.hash);
+      res.json({msg:a});
+    } else if (req.body.reqType === "like" || req.body.reqType === "dislike") {
+      const b = Channel.valueArticle(req.params.pathID,Number(req.params.index),req.headers["x-forwarded-for"]||req.ip,req.body.reqType);
       res.json({msg:b});
+    } else {
+      res.json({msg:"error"})
     }
   }
 }

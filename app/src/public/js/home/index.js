@@ -26,7 +26,6 @@ function sendLoginForm(){
 
 function liveChatUpdate(){
   send({purpose: "liveChatInfo"}, (res) => {
-    console.log(res);
     if (res.msg === "success") {
       if (res.count !== chatCount) {
         for (let i = res.count<chatCount+15 ? chatCount:res.count-15; i<res.count; i++){
@@ -67,4 +66,4 @@ chatSpace.addEventListener("keypress", function(event){
 //   getElm("#date")[0].innerHTML = ((x,y)=>x.getFullYear()+"년 "+y(x.getMonth()+1)+"월 "+y(x.getDate())+"일<br>"+y(x.getHours())+"시 "+y(x.getMinutes())+"분 "+y(x.getSeconds())+"초")(new Date(),(a) => ("00"+a).slice(-2));
 // }
 
-setInterval(liveChatUpdate,3*1000);
+setInterval(liveChatUpdate,1000);
