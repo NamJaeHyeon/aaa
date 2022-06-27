@@ -44,6 +44,7 @@ function liveChatUpdate(){
         chatCount = res.count;
       }
     }
+    console.log(res.connecting);
     getElm("#connecting")[0].innerText = res.connecting;
   });
 }
@@ -60,6 +61,15 @@ chatSpace.addEventListener("keypress", function(event){
       else alert(res.msg);
     });
   }
+});
+
+getElm("#menu")[0].addEventListener("click", function(event){
+  let a = getElm("#app")[0].style;
+  a.display = a.display==="none"?"block":"none";
+});
+
+getElm("#coding")[0].addEventListener("click", function(event){
+  location.href = "/coding";
 });
 
 // function updateDate(){

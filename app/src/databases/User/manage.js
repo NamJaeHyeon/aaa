@@ -1,8 +1,6 @@
 "use strict";
 
 const fs = require("fs");
-const StorageManage = require("./src/databases/Storage/manage");
-const Storage = new StorageManage();
 
 class User {
 
@@ -10,24 +8,87 @@ class User {
     return JSON.parse(fs.readFileSync("./src/databases/User/info.json","utf8"));
   }
 
-  isRegisteredUserID(userID){
-    const info = this.getInfo();
-    return info.userID.includes(userID);
+  getUser(ip,info){
+    return JSON.parse(fs.readFileSync("./src/databases/User/"+info.id.indexOf(ip)+".json","utf8"));
   }
 
-  register(userID,nickname,password){
-    if(userID){
+  saveInfo(obj){
+    fs.writeFileSync("./src/databases/User/info.json",JSON.stringify(obj));
+  }
 
+  saveUser(obj){
+    fs.writeFileSync("./src/databases/User/"+obj.index+".json",JSON.stringify(obj));
+  }
+
+  register(ip){
+    const info = this.getInfo();
+    if(info.id.includes(ip)) return;
+    this.saveUser({
+      "type": 0,
+      "index": info.count,
+      "ip": ip,
+      "activities": [],
+      "ipToBlock": [],
+      "blockedTo": []
+    });
+    info.count += 1;
+    info.id.push(ip);
+    info.type.push(0);
+    this.saveInfo(info);
+  }
+
+  blockUser(fromIp,toIp){
+    if (fromIp === toIp) return {msg: "can't block yourself"};
+    this.register(fromIp);
+    this.register(toIp);
+    const info = this.getInfo();
+    const fromInfo = this.getUser(fromIp,info);
+    const toInfo = this.getUser(toIp,info);
+    if(!toInfo.ipToBlock.includes(fromIp)){
+      toInfo.ipToBlock.push(fromIp);
+      this.saveUser(toInfo);
+    }
+    if(!fromInfo.blockedTo.includes(toIp)){
+      fromInfo.blockedTo.push(toIp);
+      this.saveUser(fromInfo);
+    }
+    return {msg: "success"};
+  }
+
+  getBlockedCount(ip){
+    const info = this.getInfo();
+    if(info.id.includes(ip)){
+      const userInfo = this.getUser(ip,info);
+      return {msg:"success",detail:userInfo.blockedTo.length};
     } else {
-      return false;
+      this.userSignup(ip,info);
+      let userInfo = this.getUser(ip,info);
+      return {msg:"success",detail:userInfo.blockedTo.length};
     }
   }
 
-  getUserInfo(userID){
-    const info = this.getInfo();
-    return ;
+  getBlockedList(ip){
+    let info = this.getInfo();
+    if(info.id.includes(ip)){
+      let userInfo = this.getUser(ip,info);
+      return {msg:"success",detail:userInfo.blockedTo};
+    } else {
+      this.userSignup(ip,info);
+      let userInfo = this.getUser(ip,info);
+      return {msg:"success",detail:userInfo.blockedTo};
+    }
+  }
+
+  getUserInfo(ip){
+    let info = this.getInfo();
+    if(info.id.includes(ip)){
+      return {main: info, user: this.getUser(ip,info)};
+    } else {
+      this.registerInfo(ip);
+      return {main: this.getInfo(), user: this.getUser(ip,info)};
+    }
   }
 
 }
 
-module.exports = Storage;
+module.exports = User;

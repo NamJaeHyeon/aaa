@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <%- head -%>
+  <script src="/js/home/example.js" defer></script>
+  <style>
+    .base-border{
+      border-width: 1px 0 0 1px;
+      border-color: white;
+    }
+    .option:hover{
+      background-color: gray;
+    }
+  </style>
+</head>
+<body style="background-color:black">
+  <header alt="네비게이터">
+    <nav class="navbar fixed-top navbar-light bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/" style="color:white;float:left" alt="메인으로"><%- headerName -%></a>
+        <a class="navbar-brand" href="/login" alt="로그인" style="float:right;display:none;">로그인</a>
+      </div>
+    </nav>
+  </header>
+  <div style="padding-top: 86px"></div>
+  <div style="background-color:rgb(177, 177, 177);font-size:25px;">
+    <div class="option" style="cursor:pointer;padding:10px;display:inline-block;font-weight:bold;">저장</div>
+    <div class="option" style="cursor:pointer;padding:10px;display:inline-block;font-weight:bold;">보기</div>
+  </div>
+  
+  <div style="position:relative;margin:50px auto;width:1500px;height:1000px">
+    <div style="border: 1px solid black;text-align:center">
+      <div class="in" style="background-color:white;color:black;">Body</div>
+    </div>
+  </div>
+  
+  <%- foot -%>
+</body>
+</html>

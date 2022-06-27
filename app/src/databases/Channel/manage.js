@@ -3,8 +3,8 @@
 const fs = require("fs");
 const Storage = new (require("../Storage/manage"))();
 const Validator = new (require("../../models/validator"))();
+const User = new (require("../User/manage"))();
 const crypto = require('crypto');
-const { runInThisContext } = require("vm");
 
 function sha256(value) {
   return crypto.createHmac('sha256', "소프트웨어 시장 씹어먹자 ㅋㅋ").update(value).digest('hex')
@@ -38,12 +38,14 @@ class Channel {
     return [obj,a];
   }
 
-  getParsedArticle(pathID,index){
+  getParsedArticle(pathID,index,doGetUser){
     const channelsInfo = this.getChannelsInfo();
     if(this.existsPathID(pathID,channelsInfo),channelsInfo){
       const channelInfo = this.getChannelInfo(pathID);
       if(this.existsArticle(index,channelInfo)){
-        return this.parseArticleByInfo(this.getArticleInfo(pathID,index));
+        const r = this.parseArticleByInfo(this.getArticleInfo(pathID,index));
+        if(!doGetUser) return r;
+        else return {article: r, user:User.getUserInfo(r[0].writer)};
       } else {
         return "doesn't exist the article";
       }
@@ -152,7 +154,7 @@ class Channel {
           articleInfo.title = Validator.blockXSS(articleInfo.title);
         }
         articleInfo.writer = Validator.hideIP(articleInfo.writer);
-        return Object.assign(articleInfo,{channelName:channelInfo.ChannelName});
+        return Object.assign(articleInfo,{channelName:channelInfo.ChannelName,blockedCount:User.getBlockedCount(articleInfo.writer)});
       } else {
         return "doesn't exist the article";
       }

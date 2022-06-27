@@ -2,10 +2,18 @@
 
 const res = require("express/lib/response");
 const fs = require("fs");
+const { userInfo } = require("os");
 const Channel = new (require("../../databases/Channel/manage"))();
 const LiveChat = new (require("../../databases/MainLiveChat/manage"))();
 const Log = new (require("../../databases/Log/manage"))();
+const User = new (require("../../databases/User/manage"))();
+const Comment = new (require("../../databases/Comment/manage"))();
+
 let connecting = [];
+
+function getIp(req){
+  return req.headers["x-forwarded-for"]||req.ip;
+}
 
 function pageBase(){
   let head = fs.readFileSync('./src/views/home/head','utf8');
@@ -53,7 +61,7 @@ const output = {
     res.render('home/writeArticle', pageBase());
   },
   watchArticle: (req, res) => {
-    const a = Channel.viewArticle(req.params.pathID,Number(req.params.index),req.headers["x-forwarded-for"]||req.ip);
+    const a = Channel.viewArticle(req.params.pathID,Number(req.params.index),getIp(req));
     if (a.blinded) {
       res.render('home/error', Object.assign(pageBase(),{info:"삭제된 게시글입니다."}));
     } else if (a === "doesn't exist the article"){
@@ -68,15 +76,21 @@ const output = {
   },
   editArticle: (req, res) => {
     res.render('home/editArticle', pageBase());
+  },
+  coding: (req, res) => {
+    res.render('home/coding', pageBase());
+  },
+  comment: (req, res) => {
+    res.render('home/comment', Object.assign(pageBase()));
   }
 };
 
 const process = {
   main: (req, res) => {
     connecting = connecting.filter(x => {return x.date > (new Date()).getTime()-10000});
-    let myid = connecting.findIndex(x => x.ip === req.headers["x-forwarded-for"]||req.ip);
+    let myid = connecting.findIndex(x => x.ip === getIp(req));
     if(myid === -1){
-      connecting.push({ip:req.headers["x-forwarded-for"]||req.ip, date:(new Date()).getTime()});
+      connecting.push({ip:getIp(req), date:(new Date()).getTime()});
     } else {
       connecting[myid].date = (new Date()).getTime();
     }
@@ -113,7 +127,7 @@ const process = {
         } else {
           a.count += 1;
           fs.writeFileSync("./src/Notice/notice.json",JSON.stringify(a));
-          fs.writeFileSync("./src/Notice/"+(a.count-1),JSON.stringify({body:req.body,ip:req.headers["x-forwarded-for"]||req.ip}));
+          fs.writeFileSync("./src/Notice/"+(a.count-1),JSON.stringify({body:req.body,ip:getIp(req)}));
           res.json({msg: "success"});
         }
       }
@@ -122,7 +136,7 @@ const process = {
     }
   },
   writeArticle: (req, res) => {
-    const a = Channel.writeArticle(req.body.path.slice(6),req.body.title,req.body.detail,req.headers["x-forwarded-for"]||req.ip,req.body.hash);
+    const a = Channel.writeArticle(req.body.path.slice(6),req.body.title,req.body.detail,getIp(req),req.body.hash);
     if(a === "doesn't exist the pathID"){
       res.json({msg: "해당 경로가 존재하지 않습니다."});
     } else if (a === "success") {
@@ -133,7 +147,7 @@ const process = {
   },
   articleEdit: (req, res) => {
     if (req.body.type==="init"){
-      const a = Channel.viewArticle(req.params.pathID,Number(req.params.index),req.headers["x-forwarded-for"]||req.ip,false);
+      const a = Channel.viewArticle(req.params.pathID,Number(req.params.index),getIp(req),false);
       if (a === "doesn't exist the pathID") {
         res.json({msg:"존재하지 않는 경로입니다."});
       } else if (a === "doesn't exist the article"){
@@ -147,19 +161,39 @@ const process = {
       const a = Channel.editArticle(req.params.pathID,Number(req.params.index),req.body.title,req.body.article,req.body.hash);
       res.json({msg:a});
     } else {
-      res.json({msg:"Error"})
+      res.json({msg:"Error"});
     }
   },
   articleUpdate: (req, res) => {
-    if(req.body.reqType === "delete"){
+    if(req.body.reqType === "refresh"){
+      const a = Channel.getParsedArticle(req.params.pathID,Number(req.params.index),true);
+      res.json({msg:"success",like:a.article[0].likeCount,dislike:a.article[0].dislikeCount,blocked:a.user.user.blockedTo.length});
+    } else if(req.body.reqType === "block"){
+      const a = User.blockUser(getIp(req),Channel.getParsedArticle(req.params.pathID,Number(req.params.index),false)[0].wrtier);
+      res.json({msg:a.msg});
+    } else if(req.body.reqType === "getComment"){
+      const a = Channel.getParsedArticle(req.params.pathID,Number(req.params.index),true);
+      res.json({msg:"success",like:a.article[0].likeCount,dislike:a.article[0].dislikeCount,blocked:a.user.user.blockedTo.length});
+    } else if (req.body.reqType === "delete"){
       const a = Channel.deleteArticle(req.params.pathID,Number(req.params.index),req.body.hash);
       res.json({msg:a});
     } else if (req.body.reqType === "like" || req.body.reqType === "dislike") {
-      const b = Channel.valueArticle(req.params.pathID,Number(req.params.index),req.headers["x-forwarded-for"]||req.ip,req.body.reqType);
+      const b = Channel.valueArticle(req.params.pathID,Number(req.params.index),getIp(req),req.body.reqType);
       res.json({msg:b});
     } else {
       res.json({msg:"error"})
     }
+  },
+  comment: (req,res) => {
+    if(req.body.reqType==="getComment"){
+      const comment = Comment.getComment(req.body.index);
+      if(!comment) res.json({msg:"failed1"});
+      const k = Object.keys(comment);
+      if(["content","pwHash","attachments","like","dislike","writer"].every(x=>k.includes(x)))
+        res.json({msg:"success",comment:Comment.parseComment(comment)});
+      else res.json({msg:"failed2"});
+    }
+    else res.json({msg:"failed3"});
   }
 }
 
@@ -173,4 +207,3 @@ module.exports = {
   process,
   log
 };
-
