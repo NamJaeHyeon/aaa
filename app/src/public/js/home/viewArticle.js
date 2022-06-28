@@ -5,7 +5,7 @@ const getElm = function (query){
 };
 
 function DateToText(t){
-  return ((x,y)=>x.getFullYear()+"."+y(x.getMonth()+1)+"."+y(x.getDate())+" "+(z=>z<12?"오전 ":"오후 "+y(z<12?z:z-12))(x.getHours())+":"+y(x.getMinutes())+":"+y(x.getSeconds()))(new Date(t),(a) => ("00"+a).slice(-2));
+  return ((x,y)=>x.getFullYear()+"."+y(x.getMonth()+1)+"."+y(x.getDate())+" "+(z=>(z<12?"오전 ":"오후 ")+y(z<13?z:z-12))(x.getHours())+":"+y(x.getMinutes())+":"+y(x.getSeconds()))(new Date(t),(a) => ("00"+a).slice(-2));
 }
 
 function timePassed(t){
@@ -15,11 +15,12 @@ function timePassed(t){
   } else if (pass < 60*60) {
     return Math.floor(pass/60) + "분 전";
   } else if (pass < 60*60*24) {
-    return Math.floor(pass/60/24) + "시간 전";
+    return Math.floor(pass/60/60) + "시간 전";
   } else if (pass < 60*60*24*30) {
-    return Math.floor(pass/60/24/30) + "일 전";
+    let a = Math.floor(pass/60/60/24/30);
+    return Math.floor(pass/60/60/24) + "일" + (a>0 ? "("+a+"달)" : "") + " 전";
   } else if (pass < 60*60*24*365) {
-    return Math.floor(pass/60/24/365) + "년 전";
+    return Math.floor(pass/60/60/24/365) + "년 전";
   }
 }
 
@@ -29,7 +30,7 @@ const articleDate = DateToText(articleTime);
 getElm("#nowPath")[0].innerHTML = (x=>{x[0]=`<a style="color:white" href="/channel/${x[0]}">${getElm("#channel_name")[0].innerText}</a>`;return x;})(location.pathname.split("/").slice(2)).join(" > ");
 
 function updateDate(){
-  let passed = articleTime-(new Date()).getTime();
+  let passed = articleTime-new Date();
   getElm("#time")[0].innerText = timePassed(articleTime) + " (" + articleDate + ")";
   if(passed/1000<60){
     setTimeout(updateDate,1000);
@@ -84,10 +85,11 @@ getElm("#dislike-button")[0].addEventListener("click", function(event){
 
 getElm("#block")[0].addEventListener("click", function(event){
   send(location.pathname, {reqType:"block"}, (res) => {
-    console.log(res);
     if (res.msg === "success"){
       alert("해당 아이피를 차단하였습니다.");
       location.href=location.pathname.split("/").slice(0,-1).join("/");
+    } else if(res.msg === "can't block yourself"){
+      alert("자신의 ip를 차단할 수 없습니다.");
     } else {
       alert("error");
     }
@@ -127,7 +129,6 @@ function refresh(){
       getElm("#like_count")[0].innerText = res.like;
       getElm("#dislike_count")[0].innerText = res.dislike;
       getElm("#block")[0].innerText = "차단 "+res.blocked;
-      console.log(res);
     } else {
       alert("error");
     }

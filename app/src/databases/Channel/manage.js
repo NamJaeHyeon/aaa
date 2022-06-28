@@ -223,12 +223,14 @@ class Channel {
     }
   }
 
-  getHTMLArticlesList(pathID,page){
+  getHTMLArticlesList(pathID,page,requestIp){
     const channelsInfo = this.getChannelsInfo();
     if(this.existsPathID(pathID,channelsInfo)){
       const channelInfo = this.getChannelInfo(pathID);
       let t = "";
       const c = channelInfo.articleCount;
+      const myInfo = User.getUserInfo(requestIp);
+      const ipToBlock = myInfo.user.ipToBlock;
       let startIndex,endIndex;
       if (Validator.canIndexNumber(page) && page>0 && page<=c/50+1) {
         startIndex = c-50*page<0?0:c-50*page;
@@ -240,7 +242,7 @@ class Channel {
       for(let i=startIndex;i<endIndex;i++){
         if(this.existsArticle(i,channelInfo)){
           let articleInfo = this.getArticleInfo(pathID,i);
-          t = `<div>${articleInfo.index}</div><div>${articleInfo.blinded?"":`<a href="/channel/${pathID}/${i}">`}<div style="width:100%;height:100%;text-align:left;">${Validator.blockXSS(articleInfo.title)} ${articleInfo.blinded?`<span style="color:gray">(삭제됨)</span>`:articleInfo.edited?`<span style="color:gray">(수정됨)</span>`:""}</div>${articleInfo.blinded?"":"</a>"}</div><div>${Validator.hideIP(articleInfo.writer)}</div><div>${articleInfo.viewCount}</div><div>${articleInfo.likeCount-articleInfo.dislikeCount}</div>
+          if(!ipToBlock.includes(articleInfo.writer))t = `<div>${articleInfo.index}</div><div>${articleInfo.blinded?"":`<a href="/channel/${pathID}/${i}">`}<div style="width:100%;height:100%;text-align:left;">${ipToBlock.includes(articleInfo.writer) ? "<span style='color:red'>(차단한 IP)</span>" : ""} ${Validator.blockXSS(articleInfo.title)} ${articleInfo.blinded?`<span style="color:gray">(삭제됨)</span>`:articleInfo.edited?`<span style="color:gray">(수정됨)</span>`:""}</div>${articleInfo.blinded?"":"</a>"}</div><div>${Validator.hideIP(articleInfo.writer)}</div><div>${articleInfo.viewCount}</div><div>${articleInfo.likeCount-articleInfo.dislikeCount}</div><div>${(x=>x.getMonth()+1+"/"+x.getDate())(new Date(articleInfo.date))}</div>
         ` + t;
         }
       }

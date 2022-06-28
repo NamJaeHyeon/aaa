@@ -43,7 +43,7 @@ class Comment {
       "dislikeCount": 0,
       "writer": writer,
       "userType": 0,
-      "date": (new Date()).getTime()+1000*60*60*9,
+      "date": +new Date()+1000*60*60*9,
       "pwHash": sha256(pwHash),
       "attachments": []
     }));

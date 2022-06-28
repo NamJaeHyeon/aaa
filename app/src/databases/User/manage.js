@@ -1,6 +1,7 @@
 "use strict";
 
 const fs = require("fs");
+const Validator = new (require("../../models/validator"))();
 
 class User {
 
@@ -9,7 +10,9 @@ class User {
   }
 
   getUser(ip,info){
-    return JSON.parse(fs.readFileSync("./src/databases/User/"+info.id.indexOf(ip)+".json","utf8"));
+    const index = info.id.indexOf(ip);
+    if(Validator.canIndexNumber(index) && index < info.id.length) return JSON.parse(fs.readFileSync("./src/databases/User/"+info.id.indexOf(ip)+".json","utf8"));
+    else return "can not find user";
   }
 
   saveInfo(obj){
@@ -61,7 +64,7 @@ class User {
       const userInfo = this.getUser(ip,info);
       return {msg:"success",detail:userInfo.blockedTo.length};
     } else {
-      this.userSignup(ip,info);
+      this.register(ip);
       let userInfo = this.getUser(ip,info);
       return {msg:"success",detail:userInfo.blockedTo.length};
     }
@@ -73,7 +76,7 @@ class User {
       let userInfo = this.getUser(ip,info);
       return {msg:"success",detail:userInfo.blockedTo};
     } else {
-      this.userSignup(ip,info);
+      this.register(ip);
       let userInfo = this.getUser(ip,info);
       return {msg:"success",detail:userInfo.blockedTo};
     }
@@ -84,7 +87,7 @@ class User {
     if(info.id.includes(ip)){
       return {main: info, user: this.getUser(ip,info)};
     } else {
-      this.registerInfo(ip);
+      this.register(ip);
       return {main: this.getInfo(), user: this.getUser(ip,info)};
     }
   }

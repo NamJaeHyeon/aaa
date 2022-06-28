@@ -8,8 +8,10 @@ const LiveChat = new (require("../../databases/MainLiveChat/manage"))();
 const Log = new (require("../../databases/Log/manage"))();
 const User = new (require("../../databases/User/manage"))();
 const Comment = new (require("../../databases/Comment/manage"))();
+const Storage = new (require("../../databases/Storage/manage"))();
 
-let connecting = [];
+let connecting = JSON.parse(fs.readFileSync("./src/routes/home/connecting","utf8"));
+
 
 function getIp(req){
   return req.headers["x-forwarded-for"]||req.ip;
@@ -50,7 +52,7 @@ const output = {
     res.render('home/makeChannel', pageBase());
   },
   watchArticleList: (req, res) => {
-    const a = Channel.getHTMLArticlesList(req.params.pathID,0);
+    const a = Channel.getHTMLArticlesList(req.params.pathID,0,getIp(req));
     if (a === "doesn't exist the pathID"){
       res.render('home/error', Object.assign(pageBase(),{info:"존재하지 않는 경로입니다."}));
     } else {
@@ -64,6 +66,8 @@ const output = {
     const a = Channel.viewArticle(req.params.pathID,Number(req.params.index),getIp(req));
     if (a.blinded) {
       res.render('home/error', Object.assign(pageBase(),{info:"삭제된 게시글입니다."}));
+    } else if (a === "you blocked this ip"){
+      res.render('home/error', Object.assign(pageBase(),{info:"당신이 차단한 ip입니다."}));
     } else if (a === "doesn't exist the article"){
       res.render('home/error', Object.assign(pageBase(),{info:"글이 존재하지 않습니다."}));
     } else if (a === "doesn't exist the pathID") {
@@ -71,7 +75,7 @@ const output = {
     } else if (a.index == req.params.index){
       res.render('home/viewArticle', Object.assign(pageBase(),{info:a}));
     } else {
-      res.render('home/viewArticle', Object.assign(pageBase(),{info:"예기치 못한 에러"}));
+      res.render('home/error', Object.assign(pageBase(),{info:"예기치 못한 에러"}));
     }
   },
   editArticle: (req, res) => {
@@ -92,8 +96,9 @@ const process = {
     if(myid === -1){
       connecting.push({ip:getIp(req), date:(new Date()).getTime()});
     } else {
-      connecting[myid].date = (new Date()).getTime();
+      connecting[myid].date = +new Date;
     }
+    fs.writeFileSync("./src/routes/home/connecting",JSON.stringify(connecting));
     if(req.body){
       if(req.body.purpose === "postChat"){
         const a = LiveChat.addChat(req, res);
@@ -169,7 +174,7 @@ const process = {
       const a = Channel.getParsedArticle(req.params.pathID,Number(req.params.index),true);
       res.json({msg:"success",like:a.article[0].likeCount,dislike:a.article[0].dislikeCount,blocked:a.user.user.blockedTo.length});
     } else if(req.body.reqType === "block"){
-      const a = User.blockUser(getIp(req),Channel.getParsedArticle(req.params.pathID,Number(req.params.index),false)[0].wrtier);
+      const a = User.blockUser(getIp(req),Channel.getParsedArticle(req.params.pathID,Number(req.params.index),false)[0].writer);
       res.json({msg:a.msg});
     } else if(req.body.reqType === "getComment"){
       const a = Channel.getParsedArticle(req.params.pathID,Number(req.params.index),true);
@@ -198,7 +203,7 @@ const process = {
 }
 
 const log = (req, res, next) => {
-  Log.mkLog(req, res);
+  //Log.mkLog(req, res);
   next();
 };
 
