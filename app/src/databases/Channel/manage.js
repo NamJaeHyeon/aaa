@@ -82,6 +82,7 @@ class Channel {
 
   writeArticle(pathID,title,article,ip,pwHash){
     const channelsInfo = this.getChannelsInfo();
+    if(article.length <1 || article.length > 1000) return "error";
     if(this.existsPathID(pathID,channelsInfo)){
       const channelInfo = this.getChannelInfo(pathID);
       const articleInfo = {

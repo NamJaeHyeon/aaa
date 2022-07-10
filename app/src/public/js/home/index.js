@@ -33,8 +33,8 @@ function liveChatUpdate(){
             if (res0.msg === "success") {
               let a = getElm("#getLive")[0];
               a.innerHTML = `<div>
-              <span style="font-size:15px;float:left;width:100px">${res0.writer}</span>
-              <span style="font-size:15px;float:right;width:400px;overflow:hidden;text-overflow:ellipsis;">${res0.t}</span>
+              <div style="display:inline-block;font-size:15px;width:110px">${res0.writer}</div>
+              <div style="display:inline-block;font-size:15px;width:1070px;overflow:hidden;text-overflow:ellipsis;">${res0.t}</div>
             </div>
             ` + a.innerHTML;
               if(getElm("#getLive > div").length>15)getElm("#getLive")[0].removeChild(getElm("#getLive > div")[getElm("#getLive > div").length-1]);
@@ -44,7 +44,6 @@ function liveChatUpdate(){
         chatCount = res.count;
       }
     }
-    console.log(res.connecting);
     getElm("#connecting")[0].innerText = res.connecting;
   });
 }

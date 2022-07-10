@@ -10,8 +10,6 @@ const User = new (require("../../databases/User/manage"))();
 const Comment = new (require("../../databases/Comment/manage"))();
 const Storage = new (require("../../databases/Storage/manage"))();
 
-let connecting = JSON.parse(fs.readFileSync("./src/routes/home/connecting","utf8"));
-
 
 function getIp(req){
   return req.headers["x-forwarded-for"]||req.ip;
@@ -42,6 +40,7 @@ function printChannelBoxList(){
 
 const output = {
   main: (req, res) => {
+    let connecting = JSON.parse(fs.readFileSync("./src/routes/home/connecting","utf8"));
     let a = LiveChat.printLiveChat();
     res.render('home/index', Object.assign({},pageBase(),{channel: printChannelBoxList(), chat:a[0], n:a[1], connecting:connecting.length}));
   },
@@ -79,7 +78,9 @@ const output = {
     }
   },
   editArticle: (req, res) => {
-    res.render('home/editArticle', pageBase());
+    const a = Channel.getParsedArticle(req.params.pathID, Number(req.params.index));
+    if(!a[0].blinded)res.render('home/editArticle', pageBase());
+    else res.render('home/error', Object.assign(pageBase(),{info:"수정할 수 없는 글입니다."}));
   },
   coding: (req, res) => {
     res.render('home/coding', pageBase());
@@ -91,6 +92,7 @@ const output = {
 
 const process = {
   main: (req, res) => {
+    let connecting = JSON.parse(fs.readFileSync("./src/routes/home/connecting","utf8"));
     connecting = connecting.filter(x => {return x.date > (new Date()).getTime()-10000});
     let myid = connecting.findIndex(x => x.ip === getIp(req));
     if(myid === -1){

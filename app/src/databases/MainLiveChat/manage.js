@@ -25,8 +25,8 @@ class LiveChat {
     let b = a.count;
     for(let i=b-1; i >= (b-15>=0 ? b-15:0);i--) t+=`
               <div>
-                <span style="font-size:15px;float:left;width:100px">${Validator.hideIP(a.writer[i])}</span>
-                <span style="font-size:15px;float:right;width:400px;overflow:hidden;text-overflow:ellipsis;">${Validator.blockXSS(Storage.getFile(a.content[i]))}</span>
+                <div style="display:inline-block;font-size:15px;width:110px">${Validator.hideIP(a.writer[i])}</div>
+                <div style="display:inline-block;font-size:15px;width:1070px;overflow:hidden;text-overflow:ellipsis;">${Validator.blockXSS(Storage.getFile(a.content[i]))}</div>
               </div>`;
     return [t,b];
   }

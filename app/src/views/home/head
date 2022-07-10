@@ -20,3 +20,52 @@
       <link rel="icon" type="image/x-icon" href="https://www.2infer.com/favicon.png">
       <link rel="stylesheet" href="/css/home/common.css">
       <title>인퍼 리버럴</title>
+      <style>
+            @media (prefers-color-scheme: dark) {
+                  body{
+                        background-color: black;
+                  }
+                  .reverse-color{
+                        color: black;
+                  }
+                  *{
+                        color: white;
+                  }
+                  .background-color-black{
+                        background-color: white;
+                  }
+                  .background-color-white{
+                        background-color: black;
+                  }
+                  .font-color-white{
+                        color:black;
+                  }
+                  .font-color-black{
+                        color:white;
+                  }
+            }
+
+            @media (prefers-color-scheme: light) {
+                  body{
+                        background-color: rgb(254, 254, 254);
+                  }
+                  .reverse-color{
+                        color: white;
+                  }
+                  *{
+                        color: black;
+                  }
+                  .background-color-white{
+                        background-color: white;
+                  }
+                  .background-color-black{
+                        background-color: black;
+                  }
+                  .font-color-black{
+                        color:black;
+                  }
+                  .font-color-white{
+                        color:white;
+                  }
+            }
+      </style>

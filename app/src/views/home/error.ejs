@@ -4,20 +4,17 @@
   <%- head -%>
   <script src="/js/home/example.js" defer></script>
   <style>
-    * {
-      color:white;
-    }
     .base-border{
       border-width: 1px 0 0 1px;
       border-color: white;
     }
   </style>
 </head>
-<body style="background-color:black">
+<body>
   <header alt="네비게이터">
     <nav class="navbar fixed-top navbar-light bg-dark">
       <div class="container-fluid" style="width:1200px">
-        <a class="navbar-brand" href="/" style="color:white;float:left" alt="메인으로"><%- headerName -%></a>
+        <a class="navbar-brand" href="/" style="float:left" alt="메인으로"><%- headerName -%></a>
         <a class="navbar-brand" href="/login" alt="로그인" style="float:right;display:none;">로그인</a>
       </div>
     </nav>
@@ -25,7 +22,7 @@
   <div style="padding-top: 86px"></div>
   
   <div style="position:relative;margin:50px auto;padding:150px 0;width:1500px;height:500px">
-    <div style="border: 1px solid black;text-align:center">
+    <div style="text-align:center">
       <h1 style="font-size:100px;"><%- info -%></h1>
     </div>
   </div>

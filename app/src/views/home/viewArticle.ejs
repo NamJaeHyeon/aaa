@@ -5,9 +5,6 @@
   <script src="/js/home/sha256.min.js" integrity="sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/js/home/viewArticle.js" defer></script>
   <style>
-    * {
-      color:white;
-    }
     .base-border{
       border-width: 1px 0 0 1px;
       border-color: white;
@@ -17,11 +14,11 @@
     }
   </style>
 </head>
-<body style="background-color:black">
+<body>
   <header alt="네비게이터">
     <nav class="navbar fixed-top navbar-light bg-dark">
       <div class="container-fluid" style="width:1200px">
-        <a class="navbar-brand" href="/" style="color:white;float:left" alt="메인으로"><%- headerName -%></a>
+        <a class="navbar-brand" href="/" style="float:left" alt="메인으로"><%- headerName -%></a>
         <a class="navbar-brand" href="/login" alt="로그인" style="float:right;display:none;">로그인</a>
       </div>
     </nav>
@@ -31,7 +28,7 @@
   <span style="display:none" id="isBlock">당신이 차단한 사용자입니다.</span>
 
   <div style="position:relative;margin:50px auto;width:1200px;height:auto">
-    <div class="draggable" style="border: 1px solid black;">
+    <div class="draggable">
       <div style="margin:0 0 50px 0;" id="nowPath"></div><span id="channel_name" style="display:none;"><%- info.channelName -%></span>
       <div style="margin:30px 0;"><h1><%- info.title -%></h1></div>
       <div style="display:inline-block;color:gray;"><span id="time" style="color:gray;"></span>&#160;&#160; 작성자 <%- info.writer -%></div><span id="articleDate" style="display:none;"><%- (new Date(info.date)).getTime() -%></span>
@@ -39,17 +36,17 @@
       <div style="border-bottom:1px solid gray;margin:10px 0 50px 0;"></div>
       <div style="word-wrap:break-word"><%- info.article -%></div>
       <div style="height:100px;"></div>
-      <button id="share" style="background-color:gray;font-size: 20px;">공유<svg style="display:inline;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-link" viewBox="0 0 16 16">
+      <button class="font-color-white" id="share" style="background-color:gray;font-size: 20px;border:0">공유<svg style="display:inline;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-link" viewBox="0 0 16 16">
         <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>
         <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
       </svg></button>
-      <button id="edit" style="border: 1px solid gray;background-color:black;font-size:20px;">수정</button>
-      <button id="delete" style="border: 1px solid gray;background-color:black;font-size:20px;">삭제</button>
-      <button id="report" style="border: 1px solid gray;background-color:red;font-size:20px;float:right;margin:4px;">신고</button>
-      <button id="block" style="border: 1px solid gray;background-color:red;font-size:20px;float:right;margin:4px;">차단 0</button>
+      <button class="background-color-white font-color-black" id="edit" style="border: 1px solid gray;font-size:20px;">수정</button>
+      <button class="background-color-white font-color-black" id="delete" style="border: 1px solid gray;font-size:20px;">삭제</button>
+      <button id="report" style="color:white;border:0;background-color:red;font-size:20px;float:right;margin:4px;">신고</button>
+      <button id="block" style="color:white;border:0;background-color:red;font-size:20px;float:right;margin:4px;">차단 0</button>
       <div style="text-align:center;margin:50px 50px 0 50px;">
-        <div id="like-button" style="cursor:pointer;display:inline-block;font-size:30px;width:100px;height:100px;border-radius:50px;background-color:gray;padding:28px 0;margin-right:30px;">좋아요</div>
-        <div id="dislike-button" style="cursor:pointer;display:inline-block;font-size:30px;width:100px;height:100px;border-radius:50px;background-color:gray;padding:28px 0;">싫어요</div>
+        <div class="font-color-white" id="like-button" style="cursor:pointer;display:inline-block;font-size:30px;width:100px;height:100px;border-radius:50px;background-color:gray;padding:28px 0;margin-right:30px;">좋아요</div>
+        <div class="font-color-white" id="dislike-button" style="cursor:pointer;display:inline-block;font-size:30px;width:100px;height:100px;border-radius:50px;background-color:gray;padding:28px 0;">싫어요</div>
       </div>
       <div style="text-align:center;">
         <div id="like_count" style="display:inline-block;font-size:30px;width:100px;height:100px;padding:28px 0;margin-right:30px;"><%- info.likeCount -%></div>
@@ -82,7 +79,7 @@
         </div>-->
       <br>
       <div style="border:1px solid gray;border-radius:25px;padding:25px;font-size:20px;">
-        <div style="display:inline-block">(182.208) <input type="text" name="comment" id="comment" style="width:auto;background-color:black;border-width:0 0 1px 0;" placeholder="글쓰기"></div>
+        <div style="display:inline-block">182.208 <input class="background-color-white" type="text" name="comment" id="comment" style="width:800px;border-width:0 0 1px 0;" placeholder="글쓰기" maxlength="100"></div>
         </div>
       </div>
     </div>

@@ -27,7 +27,7 @@ function timePassed(t){
 const articleTime = Number(getElm("#articleDate")[0].innerText);
 const articleDate = DateToText(articleTime);
 
-getElm("#nowPath")[0].innerHTML = (x=>{x[0]=`<a style="color:white" href="/channel/${x[0]}">${getElm("#channel_name")[0].innerText}</a>`;return x;})(location.pathname.split("/").slice(2)).join(" > ");
+getElm("#nowPath")[0].innerHTML = (x=>{x[0]=`<a class="font-color-black" href="/channel/${x[0]}">${getElm("#channel_name")[0].innerText}</a>`;return x;})(location.pathname.split("/").slice(2)).join(" > ");
 
 function updateDate(){
   let passed = articleTime-new Date();
@@ -107,20 +107,22 @@ getElm("#edit")[0].addEventListener("click", function(event){
 
 getElm("#delete")[0].addEventListener("click", function(event){
   const pw = prompt("비밀번호 입력");
-  const obj = {
-    reqType: "delete",
-    hash: sha256(pw+"adsfsdf")
-  };
-  send(location.pathname, obj, (res) => {
-    if(res.msg === "success"){
-      alert("삭제되었습니다.");
-      location.href = (x=>{x.pop();return x;})(location.pathname.split("/")).join("/");
-    } else if (res.msg === "mismatched password"){
-      alert("비밀번호가 잘못되었습니다.");
-    } else {
-      alert("error");
-    }
-  });
+  if(pw !== null){
+    const obj = {
+      reqType: "delete",
+      hash: sha256(pw+"adsfsdf")
+    };
+    send(location.pathname, obj, (res) => {
+      if(res.msg === "success"){
+        alert("삭제되었습니다.");
+        location.href = (x=>{x.pop();return x;})(location.pathname.split("/")).join("/");
+      } else if (res.msg === "mismatched password"){
+        alert("비밀번호가 잘못되었습니다.");
+      } else {
+        alert("error");
+      }
+    });
+  }
 });
 
 function refresh(){

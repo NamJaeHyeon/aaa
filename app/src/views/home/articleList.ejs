@@ -4,7 +4,7 @@
   <%- head -%>
   <style>
     * {
-      color:white;
+      
     }
     .base-border{
       border-width: 1px 0 0 1px;
@@ -33,14 +33,24 @@
       text-decoration: underline;
       text-decoration-color: white;
     }
+    @media (prefers-color-scheme: light) {
+      .tmp-style-1{
+        border:solid black;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      .tmp-style-1{
+        border:solid white;
+      }
+    }
   </style>
   <script src="/js/home/articleList.js" defer></script>
 </head>
-<body style="background-color:black">
+<body>
   <header alt="네비게이터">
     <nav class="navbar fixed-top navbar-light bg-dark">
       <div class="container-fluid" style="width:1200px">
-        <a class="navbar-brand" href="/" style="color:white;float:left" alt="메인으로"><%- headerName -%></a>
+        <a class="navbar-brand" href="/" style="float:left" alt="메인으로"><%- headerName -%></a>
         <a class="navbar-brand" href="/login" alt="로그인" style="float:right;display:none;">로그인</a>
       </div>
     </nav>
@@ -48,16 +58,16 @@
   <div style="padding-top: 86px"></div>
 
   <div style="position:relative;margin:50px auto;width:1200px;">
-    <div style="border: 1px solid black;text-align:center">
+    <div style="text-align:center">
       <h1><%- channelName -%></h1>
     </div>
   </div>
 
   <div style="position:relative;margin:0 auto 250px auto;width:1200px;height:auto">
-    <div style="border: 1px solid black;text-align:center">
-      <button id="writeArticle" style="border: 1px solid gray;background-color:black;margin:30px;font-size: 20px;">글쓰기</button>
+    <div style="text-align:center">
+      <button class="background-color-white font-color-black" id="writeArticle" style="border: 1px solid gray;margin:30px;font-size: 20px;">글쓰기</button>
       <div class="gridList" style="display:grid;grid-template-columns: 1fr 11fr 1fr 1fr 1fr 1fr;">
-        <div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">#</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">제목</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">글쓴이</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">조회수</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">평가</div><div style="border:1px solid white;border-width:1px 0;border-color:white;padding:5px 0;">날짜</div>
+        <div class="tmp-style-1" style="border:solid;border-width:1px 0;padding:5px 0;">#</div><div class="tmp-style-1" style="border:solid;border-width:1px 0;padding:5px 0;">제목</div><div class="tmp-style-1" style="border:solid;border-width:1px 0;padding:5px 0;">글쓴이</div><div class="tmp-style-1" style="border:solid;border-width:1px 0;padding:5px 0;">조회수</div><div class="tmp-style-1" style="border:solid;border-width:1px 0;padding:5px 0;">평가</div><div class="tmp-style-1" style="border:solid;border-width:1px 0;padding:5px 0;">날짜</div>
         <%- chli -%>
 
       </div>

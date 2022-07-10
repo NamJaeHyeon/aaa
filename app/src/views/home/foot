@@ -1,10 +1,8 @@
 <footer class="bg-dark" style="padding:60px 80px 60px 80px;" alt="사이트정보">
-  <span>협업하실분 구해요 Email</span>
-  <span style="font-weight:bold"> │ </span>
-  <span>nwlef1229@naver.com</span>
-  <span style="font-weight:bold"> │ </span>
-  <span>rexnamccx1229@gmail.com</span>
-  <span style="font-weight:bold"> │ </span>
-  <span>&copy;2022 </span>
-  <span>InferLiberal</span>
+  <span style="color:white;">협업 및 문의 Email</span>
+  <span style="color:white;font-weight:bold"> │ </span>
+  <span style="color:white;">rexnamccx1229@gmail.com</span>
+  <span style="color:white;font-weight:bold"> │ </span>
+  <span style="color:white;">&copy;2022 </span>
+  <span style="color:white;">InferLiberal</span>
 </footer>

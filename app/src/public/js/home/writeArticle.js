@@ -35,6 +35,9 @@ getElm("button")[0].addEventListener("click", function(event){
   } else if (getElm("#pw")[0].value.length<1) {
     alert("적어도 1자 이상의 비밀번호를 입력해주세요.");
     return;
+  } else if (obj.detail.length>1000) {
+    alert("내용을 1000자 이내로 작성해주세요.");
+    return;
   } else {
     send(obj, (res) => {
       if(res.msg === "success"){
