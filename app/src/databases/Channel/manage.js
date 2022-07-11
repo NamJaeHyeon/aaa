@@ -253,6 +253,15 @@ class Channel {
     }
   }
 
+  pushInnerComment(pathID,index){
+    const channelsInfo = this.getChannelsInfo();
+    if(this.existsPathID(pathID,channelsInfo)){
+      const channelInfo = this.getChannelInfo(pathID);
+      return;
+    }
+    return;
+  }
+
 }
 
 module.exports = Channel;

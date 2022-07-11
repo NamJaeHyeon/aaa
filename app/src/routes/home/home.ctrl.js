@@ -187,6 +187,9 @@ const process = {
     } else if (req.body.reqType === "like" || req.body.reqType === "dislike") {
       const b = Channel.valueArticle(req.params.pathID,Number(req.params.index),getIp(req),req.body.reqType);
       res.json({msg:b});
+    } else if (req.body.reqType === "postComment"){
+      const a = Comment.makeComment(req.body.root,req.body.content, getIp(req), req.body.pw);
+      res.json({});
     } else {
       res.json({msg:"error"})
     }
@@ -194,11 +197,33 @@ const process = {
   comment: (req,res) => {
     if(req.body.reqType==="getComment"){
       const comment = Comment.getComment(req.body.index);
-      if(!comment) res.json({msg:"failed1"});
-      const k = Object.keys(comment);
-      if(["content","pwHash","attachments","like","dislike","writer"].every(x=>k.includes(x)))
+      if(!comment){res.json({msg:"failed1"});return;};
         res.json({msg:"success",comment:Comment.parseComment(comment)});
-      else res.json({msg:"failed2"});
+    } else if (req.body.reqType === "like") {
+      const status = Comment.like(req.body.index-0, getIp(req));
+      if(status === "success"){
+        res.json({msg:"success"});
+      } else if (status === "already") {
+        res.json({msg:"already"});
+      } else {
+        res.json({msg:"error"});
+      }
+    } else if (req.body.reqType === "dislike") {
+      const status = Comment.dislike(req.body.index-0, getIp(req));
+      if(status === "success"){
+        res.json({msg:"success"});
+      } else if (status === "already") {
+        res.json({msg:"already"});
+      } else {
+        res.json({msg:"error"});
+      }
+    } else if (req.body.reqType === "postComment") {
+      const status = Comment.makeComment(req.body.parentIndex-0,req.body.content, getIp(req), req.body.pw);
+      if (status === "success") {
+        res.json({msg:"success"});
+      } else {
+        res.json({msg:"error"});
+      }
     }
     else res.json({msg:"failed3"});
   }

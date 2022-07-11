@@ -43,11 +43,11 @@ class Comment {
       "dislikeCount": 0,
       "writer": writer,
       "userType": 0,
-      "date": +new Date()+1000*60*60*9,
+      "date": +new Date(),
       "pwHash": sha256(pwHash),
       "attachments": []
     }));
-    const rootComment = fs.readFileSync("./src/databases/Comment/"+root+".json","utf8");
+    const rootComment = JSON.parse(fs.readFileSync("./src/databases/Comment/"+root+".json","utf8"));
     rootComment.innerComment.push(info.count);
     fs.writeFileSync(`./src/databases/Comment/${root}.json`,JSON.stringify(rootComment));
     info.count++;
@@ -57,7 +57,7 @@ class Comment {
 
   makeComment(root, content, writer, pwHash){
     const info = this.getInfo();
-    if (this.isValidatedIndex(root) && Validator.strLength(content,1,1000))
+    if (this.isValidatedIndex(root,info) && Validator.strLength(content,1,300))
       return this.makeComment__force(root, content, writer, pwHash, info);
     else return;
   }
@@ -70,6 +70,44 @@ class Comment {
     delete comment.dislike;
     comment.writer = comment.writer.split(".").slice(0,2).join(".");
     return comment;
+  }
+
+  like(index, ip) {
+    const info = this.getInfo();
+    if(this.isValidatedIndex(index,info)){
+      const comment = this.getComment(index,info);
+      if(comment.like.includes(ip)){
+        return "already";
+      } else if(comment.dislike.includes(ip)){
+        comment.dislike = comment.dislike.filter(x => x!==ip);
+      }
+      comment.like.push(ip);
+      comment.likeCount = comment.like.length;
+      comment.dislikeCount = comment.dislike.length;
+      fs.writeFileSync("./src/databases/Comment/"+index+".json",JSON.stringify(comment));
+      return "success";
+    } else {
+      return "error";
+    }
+  }
+  
+  dislike(index, ip) {
+    const info = this.getInfo();
+    if(this.isValidatedIndex(index,info)){
+      const comment = this.getComment(index,info);
+      if(comment.dislike.includes(ip)){
+        return "already";
+      } else if(comment.like.includes(ip)){
+        comment.like = comment.like.filter(x => x!==ip);
+      }
+      comment.dislike.push(ip);
+      comment.likeCount = comment.like.length;
+      comment.dislikeCount = comment.dislike.length;
+      fs.writeFileSync("./src/databases/Comment/"+index+".json",JSON.stringify(comment));
+      return "success";
+    } else {
+      return "error";
+    }
   }
   
 }

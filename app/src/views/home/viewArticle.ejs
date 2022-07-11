@@ -9,8 +9,13 @@
       border-width: 1px 0 0 1px;
       border-color: white;
     }
-    button, input[type=button]{
+    button{
       background-color: black;
+    }
+    input[type=button]{
+      border: 1px solid gray;
+      border-radius: 5px;
+      margin-right: 5px;
     }
   </style>
 </head>
@@ -52,39 +57,20 @@
         <div id="like_count" style="display:inline-block;font-size:30px;width:100px;height:100px;padding:28px 0;margin-right:30px;"><%- info.likeCount -%></div>
         <div id="dislike_count" style="display:inline-block;font-size:30px;width:100px;height:100px;padding:28px 0;"><%- info.dislikeCount -%></div>
       </div>
-      <div style="font-size:30px;">댓글 (<%- 0 -%>)</div>
-      <br>
-      <!--<div style="border:1px solid gray;border-radius:25px;padding:25px;font-size:20px;">
-        <div style="display:inline-block">(182.208) sdafasdf</div>
-        <div style="float:right;">2022.06.01 11:46:18</div>
-        <div><input type="button" value="좋아요"><input type="button" value="싫어요"><input type="button" value="공유"><input type="button" value="수정"><input type="button" value="삭제"></div>
-        <br>
-        <div>댓글(1)</div>
-        <br>
-        <div style="border:1px solid gray;border-radius:25px;padding:25px;font-size:20px;">
-          <div style="display:inline-block">(182.208) sdafasdf</div>
-          <div style="float:right;">2022.06.01 11:46:18</div>
-          <div>좋아요 | 싫어요 | 공유 | 수정 | 삭제 | 댓글</div>
-          <br>
-          <div>댓글(0)</div>
-          <br>
-          <div style="border:1px solid gray;border-radius:25px;padding:25px;font-size:20px;">
-            <div style="display:inline-block">(182.208) <input type="text" name="comment" id="comment" style="width:auto;background-color:black;border-width:0 0 1px 0;" placeholder="글쓰기"></div>
-            </div>
-          </div>
-        <br>
-        <div style="border:1px solid gray;border-radius:25px;padding:25px;font-size:20px;">
-          <div style="display:inline-block">(182.208) <input type="text" name="comment" id="comment" style="width:auto;background-color:black;border-width:0 0 1px 0;" placeholder="글쓰기"></div>
-          </div>
-        </div>-->
-      <br>
-      <div style="border:1px solid gray;border-radius:25px;padding:25px;font-size:20px;">
-        <div style="display:inline-block">182.208 <input class="background-color-white" type="text" name="comment" id="comment" style="width:800px;border-width:0 0 1px 0;" placeholder="글쓰기" maxlength="100"></div>
-        </div>
-      </div>
+      <div style="font-size:30px;">댓글</div>
+      <div id="displayComment"></div>
+      <div style="display:none;" id="info_comment"><%- JSON.stringify(info.commentLink) -%></div>
     </div>
   </div>
   
+  <div style="display:none;position:absolute;top:670px;left:calc(50% - 24px);padding:auto;text-align:center;" id="spreadButton">
+    <div style="display:inline;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+      </svg>
+    </div>
+  </div>
+
   <%- foot -%>
 </body>
 </html>
