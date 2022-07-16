@@ -262,6 +262,25 @@ class Channel {
     return;
   }
 
+  addComment(pathID,articleIndex,commentIndex){
+    const channelsInfo = this.getChannelsInfo();
+    if(this.existsPathID(pathID,channelsInfo)){
+      const channelInfo = this.getChannelInfo(pathID);
+      if(this.existsArticle(articleIndex,channelInfo)){
+        const articleInfo = this.getArticleInfo(pathID,articleIndex);
+        articleInfo.commentLink.push(commentIndex);
+        this.saveArticle_(pathID,articleIndex,articleInfo);
+        console.log(articleInfo);
+        return "success";
+      } else {
+        return "doesn't exist the article";
+      }
+    } else {
+      return "doesn't exist the pathID";
+    }
+    
+  }
+
 }
 
 module.exports = Channel;

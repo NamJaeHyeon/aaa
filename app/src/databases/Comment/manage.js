@@ -31,7 +31,7 @@ class Comment {
       return undefined;
   }
 
-  makeComment__force(root, content, writer, pwHash, info){
+  makeComment__force(root, content, writer, pwHash, info, doApplyToRoot){
     fs.writeFileSync("./src/databases/Comment/"+info.count+".json",JSON.stringify({
       "index": info.count,
       "content": Storage.addFile(content),
@@ -47,18 +47,20 @@ class Comment {
       "pwHash": sha256(pwHash),
       "attachments": []
     }));
-    const rootComment = JSON.parse(fs.readFileSync("./src/databases/Comment/"+root+".json","utf8"));
-    rootComment.innerComment.push(info.count);
-    fs.writeFileSync(`./src/databases/Comment/${root}.json`,JSON.stringify(rootComment));
+    if(!doApplyToRoot){
+      const rootComment = JSON.parse(fs.readFileSync("./src/databases/Comment/"+root+".json","utf8"));
+      rootComment.innerComment.push(info.count);
+      fs.writeFileSync(`./src/databases/Comment/${root}.json`,JSON.stringify(rootComment));
+    }
     info.count++;
     fs.writeFileSync("./src/databases/Comment/info.json",JSON.stringify(info));
-    return "success";
+    return {msg:"success",index:info.count-1};
   }
 
   makeComment(root, content, writer, pwHash){
     const info = this.getInfo();
-    if (this.isValidatedIndex(root,info) && Validator.strLength(content,1,300))
-      return this.makeComment__force(root, content, writer, pwHash, info);
+    if (Validator.strLength(content,1,300))
+      return this.makeComment__force(root, content, writer, pwHash, info, true);
     else return;
   }
 

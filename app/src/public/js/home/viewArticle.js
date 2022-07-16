@@ -219,7 +219,7 @@ function createInputToWriteInPage(){
   inputToWriteComment.addEventListener("keypress", function(event){
     if(event.key === "Enter"){
       const hash = sha256(prompt("등록할 비밀번호")+"dafwcje");
-      send({
+      send(location.pathname,{
         reqType: "postComment",
         content: inputToWriteComment.value,
         pw: hash,
@@ -253,7 +253,7 @@ function send_comment(obj,resFn){
 }
 
 function getCommentInfo(index,callbackFn){
-  send_comment({reqType:"getComment",index:index},(res) => {
+  send("/comment",{reqType:"getComment",index:index},(res) => {
     if(res.msg==="success"){
       callbackFn(res);
     }

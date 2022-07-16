@@ -180,7 +180,7 @@ const process = {
       res.json({msg:a.msg});
     } else if(req.body.reqType === "getComment"){
       const a = Channel.getParsedArticle(req.params.pathID,Number(req.params.index),true);
-      res.json({msg:"success",like:a.article[0].likeCount,dislike:a.article[0].dislikeCount,blocked:a.user.user.blockedTo.length});
+      res.json({msg:"success",like:a.article[0].likeCount,dislike:a.article[0].dislikeCount,blocked:a.user.user.blockedTo.length,innerComment:a.article[0].commentLink});
     } else if (req.body.reqType === "delete"){
       const a = Channel.deleteArticle(req.params.pathID,Number(req.params.index),req.body.hash);
       res.json({msg:a});
@@ -188,8 +188,9 @@ const process = {
       const b = Channel.valueArticle(req.params.pathID,Number(req.params.index),getIp(req),req.body.reqType);
       res.json({msg:b});
     } else if (req.body.reqType === "postComment"){
-      const a = Comment.makeComment(req.body.root,req.body.content, getIp(req), req.body.pw);
-      res.json({});
+      const a = Comment.makeComment(req.body.root, req.body.content, getIp(req), req.body.pw);
+      Channel.addComment(req.params.pathID, Number(req.params.index), a.index);
+      res.json({msg:a.msg});
     } else {
       res.json({msg:"error"})
     }
